@@ -8,7 +8,9 @@ https://link.springer.com/article/10.1007/BF02459929
 The repository does inlcude a jupyter notebook for testing predefined edge weight distributions on square lattices.
 ##  Instalation
 ##  Usage
-'''
+
+'''python
+import networkx as nx
 # generate a dummy graph for testing
 G=nx.grid_graph((7,7,1))
 
@@ -22,6 +24,7 @@ nx.draw_networkx(G,pos=pos,width=weights,with_labels=False,node_size=50,alpha=0.
 asymmetry=ag.calc_cycle_asymmetry(G)
 print(asymmetry)
 '''
+
 ##  Requirements
 ##  Gallery
 
