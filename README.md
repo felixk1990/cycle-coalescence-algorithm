@@ -27,13 +27,13 @@ networkx
 numpy
 ```
 ##  Gallery
-random weight distribution\n
+random weight distribution\
 ![random](./gallery/random.png)
 
-nested square weight distribution\n
-![nested](./gallery/nested_squares.png)
+nested square weight distribution\
+![nested](./gallery/nested_square.png)
 
-gradient weight distribution\n
+gradient weight distribution\
 ![gradient](./gallery/gradient.png)
 ## Acknowledgement
 ... written by Felix Kramer
