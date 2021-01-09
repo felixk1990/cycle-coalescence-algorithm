@@ -2,7 +2,7 @@
 ##  Introduction
 
 The repository does inlcude a jupyter notebook for testing predefined edge weight distributions on square lattices.
-##  Instalation
+##  Installation
 ##  Usage
 
 ```python
@@ -27,7 +27,14 @@ networkx
 numpy
 ```
 ##  Gallery
+random weight distribution\
+![random](./gallery/random.png)
 
+nested square weight distribution\
+![nested](./gallery/nested_square.png)
+
+gradient weight distribution\
+![gradient](./gallery/gradient.png)
 ## Acknowledgement
 ... written by Felix Kramer
 
