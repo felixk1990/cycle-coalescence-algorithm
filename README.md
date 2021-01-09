@@ -9,7 +9,7 @@ The repository does inlcude a jupyter notebook for testing predefined edge weigh
 ##  Instalation
 ##  Usage
 
-'''python
+```python
 import networkx as nx
 # generate a dummy graph for testing
 G=nx.grid_graph((7,7,1))
@@ -23,7 +23,7 @@ nx.draw_networkx(G,pos=pos,width=weights,with_labels=False,node_size=50,alpha=0.
 # merge all shortest cycles and calc the merging tree's asymmetry
 asymmetry=ag.calc_cycle_asymmetry(G)
 print(asymmetry)
-'''
+```
 
 ##  Requirements
 ##  Gallery
