@@ -26,6 +26,10 @@ print(asymmetry)
 ```
 
 ##  Requirements
+```
+networkx
+numpy
+```
 ##  Gallery
 
 
