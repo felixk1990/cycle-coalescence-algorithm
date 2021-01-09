@@ -6,5 +6,9 @@ The implementation is largely based on networkx and numpy, and enables to build 
 https://link.springer.com/article/10.1007/BF02459929
 
 The repository does inlcude a jupyter notebook for testing predefined edge weight distributions on square lattices.
+##  Instalation
+##  Usage
+##  Requirements
+##  Gallery
 
-How to use:
+
