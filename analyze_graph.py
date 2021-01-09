@@ -1,6 +1,5 @@
 import networkx as nx
 import numpy as np
-import scipy as sc
 import random as rd
 import sys
 
@@ -13,7 +12,7 @@ def calc_cycle_asymmetry(input_graph):
     tree_asymmetry=calc_tree_asymmetry(cycle_tree)
 
     return tree_asymmetry
-# merge cycle basis
+
 def calc_cycle_coalescence(input_graph,cycle_basis):
 
     #create cycle_map_tree with cycles' edges as tree nodes
@@ -367,6 +366,8 @@ def path_list(input_graph,root):
 
     return paths
 
+
+# generate example pattern random/nested/gradient
 def generate_pattern(input_graph,mode):
     iteration=0
     list_n=list(input_graph.nodes())
@@ -378,6 +379,7 @@ def generate_pattern(input_graph,mode):
         for e in input_graph.edges():
             input_graph.edges[e]['weight']=rd.uniform(0.,1.)*10.
 
+
     elif 'gradient' == mode:
 
 
@@ -386,7 +388,7 @@ def generate_pattern(input_graph,mode):
         for e in input_graph.edges():
             p=(np.array(input_graph.nodes[e[0]]['pos'])+np.array(input_graph.nodes[e[1]]['pos']))/2.
             r=np.linalg.norm(p-ref_p)
-            input_graph.edges[e]['weight']=3./r
+            input_graph.edges[e]['weight']=1./r
 
     elif 'nested_square' == mode:
 
@@ -501,7 +503,7 @@ def get_corners(input_graph):
 def get_first_tile(input_graph, corners):
 
     side_length=np.sqrt(nx.number_of_nodes( input_graph) )
-    w=10.
+    w=5.
     tile=nx.Graph()
     for i,n in enumerate(corners):
         tile.add_node(n,pos=input_graph.nodes[n]['pos'])
