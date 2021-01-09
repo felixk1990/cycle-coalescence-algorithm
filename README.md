@@ -3,7 +3,7 @@
 
   ./notebook contains examples to play with in the form of jupyter notebooks
 ##  Installation
-pip install cycle-analysis
+python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps cycle_analysis
 ##  Usage
 
 ```python
