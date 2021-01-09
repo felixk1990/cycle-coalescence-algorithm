@@ -79,14 +79,14 @@ def calc_cycle_coalescence(input_graph,cycle_basis):
 
 def calc_tree_asymmetry(cycle_tree):
 
-    list_asymmetry=[]
+    dict_asymmetry={}
 
     for n in cycle_tree.nodes():
 
         if cycle_tree.nodes[n]['branch_type']=='vanpelt_2':
-            list_asymmetry.append(cycle_tree.nodes[n]['asymmetry'])
+            dict_asymmetry[n]=(cycle_tree.nodes[n]['asymmetry'])
 
-    return list_asymmetry
+    return dict_asymmetry
 
 def build_cycle_tree(cycle_tree,cycle_keys):
 
