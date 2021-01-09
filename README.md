@@ -22,12 +22,7 @@ print(asymmetry)
 ```
 
 ##  Requirements
-```
-networkx
-```
-```
-numpy
-```
+``` networkx ```, ``` numpy ```
 ##  Gallery
 random weight distribution\
 ![random](./gallery/random.png)
