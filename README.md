@@ -16,7 +16,7 @@ import cycle_analysis.test as cat
 G=nx.grid_graph((7,7,1))
 G=cat.generate_pattern(G,'nested_square')
 
-# merge all shortest cycles and calc the merging tree's asymmetry
+# merge all shortest cycles and calc the merging tree's asymmetry for each branch
 asymmetry=cc.calc_cycle_asymmetry(G)
 print(asymmetry)
 ```
