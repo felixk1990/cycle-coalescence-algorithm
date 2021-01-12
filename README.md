@@ -12,7 +12,7 @@ import cycle_analysis.cycle_coalescence as cc
 import cycle_analysis.test as cat
 
 # generate a dummy graph for testing
-# put an edge weight distribution on the system, available are random/gradient/bigradient/nested_square
+# put an edge weight distribution on the system, available are random/gradient/nested_square
 G=nx.grid_graph((7,7,1))
 G=cat.generate_pattern(G,'nested_square')
 
