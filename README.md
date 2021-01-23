@@ -8,7 +8,7 @@ Have you ever wondered how cycles in graphs form a vector space and encapsulate 
 
 ![modes](./gallery/modes_merging_algorithm_2016.png)
 
-This project is based on the algorithm published in 'Extracting Hidden Hierarchies in 3D Distribution Networks' by Modes et al, 2016. Please acknowlede if used for any further publication.
+This project is based on the algorithm published in 'Extracting Hidden Hierarchies in 3D Distribution Networks' by Modes et al, 2016. Please acknowledge if used for any further publication or projects.
 
   ./notebook contains examples to play with in the form of jupyter notebooks
 ##  Installation
