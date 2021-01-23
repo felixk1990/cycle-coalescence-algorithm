@@ -6,7 +6,7 @@ I wrote this package during my PhD, when working on the characterization of tran
 
 Have you ever wondered how cycles in graphs form a vector space and encapsulate nesting information? If so, were you never really sure how to deal with this? Here is a tool ready to use, enabling you to calculate the cycle bases, mapping them onto a merging tree, and analyze this tree's asymmetry.
 
-![modes](./gallery/modes_merging_algorithm.png)
+![modes](./gallery/modes_merging_algorithm_2016.png)
 
 This project is based on the algorithm published in 'Extracting Hidden Hierarchies in 3D Distribution Networks' by Modes et al, 2016. Please acknowlede if used for any further publication.
 
