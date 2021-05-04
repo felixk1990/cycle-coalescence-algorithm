@@ -94,7 +94,7 @@ class simple(cycle_tools.toolbox,object):
         for c,e in total_cycle_dict.items():
             total_cycle_len[c]=len(e)
         sorted_cycle_list=sorted(total_cycle_len,key=total_cycle_len.__getitem__)
-        # print(len(total_cycle_list))
+        
         minimum_basis=[]
         minimum_label=[]
         EC=nx.Graph()

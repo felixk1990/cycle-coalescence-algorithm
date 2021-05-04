@@ -140,11 +140,12 @@ class coalescence(cycle_tools_simple.simple,object):
         # check for graph_type, then check for paralles in the Graph, if existent insert dummy nodes to resolve conflict, cast the network onto simple graph afterwards
 
         counter=0
+        self.G=nx.Graph(input_graph)
         for n in input_graph.nodes():
+
             # building new tree using breadth first
 
-            # spanning_tree=nx.minimum_spanning_tree(graph,weight='weight')
-            spanning_tree=self.breadth_first_tree(input_graph,n)
+            spanning_tree,dict_path=self.breadth_first_tree(n)
             diff_graph=nx.difference(input_graph,spanning_tree)
             labels_e={}
 
@@ -183,64 +184,83 @@ class coalescence(cycle_tools_simple.simple,object):
         return total_cycle_dict,total_cycle_list
 
     def construct_minimum_basis(self,input_graph):
+
         # calc minimum weight basis and construct dictionary for weights of edges, takes a leave-less, connected, N > 1 SimpleGraph as input, no self-loops optimally, deviations are not raising any warnings
         #sort basis vectors according to weight, creating a new minimum weight basis from the total_cycle_list
         nullity=nx.number_of_edges(input_graph)-nx.number_of_nodes(input_graph)+nx.number_connected_components(input_graph)
 
-        total_cycle_dict,total_cycle_list=generate_cycle_lists(input_graph)
+        total_cycle_dict,total_cycle_list=self.generate_cycle_lists(input_graph)
         sorted_cycle_list=sorted(total_cycle_dict,key=total_cycle_dict.__getitem__)
         minimum_basis=[]
+        minimum_label=[]
         EC=nx.MultiGraph()
         counter=0
         total_cycle_list_sort=[total_cycle_list[i] for i in sorted_cycle_list]
-        # print([len(tcl.edges()) for tcl in total_cycle_list_sort ])
+
         for c in sorted_cycle_list:
 
             cycle_edges_in_basis=True
-
-            for e in total_cycle_list[c].edges(keys=True):
+            new_cycle=total_cycle_list[c]
+            for e in new_cycle.edges(keys=True):
                 if not EC.has_edge(*e):
                     EC.add_edge(*e,label=counter)
                     counter+=1
                     cycle_edges_in_basis=False
             #if cycle edges where not part of the supergraph yet then it becomes automatically part of the basis
+            # if not cycle_edges_in_basis:
+            #     minimum_basis.append(total_cycle_list[c])
+            #
+            # #if cycle edges are already included we check for linear dependece
+            # else:
+            #     linear_independent=False
+            #     rows=len(list(EC.edges()))
+            #     columns=len(minimum_basis)+1
+            #     E=np.zeros((rows,columns))
+            #     # translate the existent basis vectors into z2 representation
+            #     for idx_c,cycle in enumerate(minimum_basis+[total_cycle_list[c]]):
+            #         for m in cycle.edges(keys=True):
+            #             if EC.has_edge(*m):
+            #                 E[EC.edges[m]['label'],idx_c]=1
+            #
+            #     # calc echelon form
+            #     a_columns=np.arange(columns-1)
+            #     zwo=np.ones(columns)*2
+            #     for column in a_columns:
+            #         idx_nz=np.nonzero(E[column:,column])[0]
+            #         if idx_nz.size:
+            #             if len(idx_nz)==1:
+            #                 E[column,:],E[idx_nz[0]+column,:]=E[idx_nz[0]+column,:].copy(),E[column,:].copy()
+            #             else:
+            #                 for r in idx_nz[1:]:
+            #                     aux_E=np.add(E[r+column],E[idx_nz[0]+column])
+            #                     E[r+column]=np.mod(aux_E,zwo)
+            #                 E[column,:],E[idx_nz[0]+column,:]=E[idx_nz[0]+column,:].copy(),E[column,:].copy()
+            #         else:
+            #             sys.exit('Error: minimum_weight_basis containing inconsistencies ...')
+            #     # test echelon form for inconsistencies
+            #     for r in range(rows):
+            #         line_check=np.nonzero(E[r])[0]
+            #         if len(line_check)==1 and line_check[0]==(columns-1):
+            #             linear_independent=True
+            #             break
+            #     if linear_independent:
+            #         minimum_basis.append(total_cycle_list[c])
             if not cycle_edges_in_basis:
-                minimum_basis.append(total_cycle_list[c])
+
+                minimum_basis.append(new_cycle)
+                aux_label=[EC.edges[e]['label'] for e in new_cycle.edges(keys=True) ]
+                minimum_label.append(aux_label)
+
             #if cycle edges are already included we check for linear dependece
             else:
-                linear_independent=False
-                rows=len(list(EC.edges()))
-                columns=len(minimum_basis)+1
-                E=np.zeros((rows,columns))
-                # translate the existent basis vectors into z2 representation
-                for idx_c,cycle in enumerate(minimum_basis+[total_cycle_list[c]]):
-                    for m in cycle.edges(keys=True):
-                        if EC.has_edge(*m):
-                            E[EC.edges[m]['label'],idx_c]=1
+                E=self.edge_matrix(EC, minimum_basis, minimum_label ,new_cycle)
 
-                # calc echelon form
-                a_columns=np.arange(columns-1)
-                zwo=np.ones(columns)*2
-                for column in a_columns:
-                    idx_nz=np.nonzero(E[column:,column])[0]
-                    if idx_nz.size:
-                        if len(idx_nz)==1:
-                            E[column,:],E[idx_nz[0]+column,:]=E[idx_nz[0]+column,:].copy(),E[column,:].copy()
-                        else:
-                            for r in idx_nz[1:]:
-                                aux_E=np.add(E[r+column],E[idx_nz[0]+column])
-                                E[r+column]=np.mod(aux_E,zwo)
-                            E[column,:],E[idx_nz[0]+column,:]=E[idx_nz[0]+column,:].copy(),E[column,:].copy()
-                    else:
-                        sys.exit('Error: minimum_weight_basis containing inconsistencies ...')
-                # test echelon form for inconsistencies
-                for r in range(rows):
-                    line_check=np.nonzero(E[r])[0]
-                    if len(line_check)==1 and line_check[0]==(columns-1):
-                        linear_independent=True
-                        break
+                linear_independent=self.compute_linear_independence(E)
+                # print(linear_independent)
                 if linear_independent:
-                    minimum_basis.append(total_cycle_list[c])
+                    minimum_basis.append(new_cycle)
+                    aux_label=[EC.edges[e]['label'] for e in new_cycle ]
+                    minimum_label.append(aux_label)
 
             if len(minimum_basis)==nullity:
                 break
@@ -250,73 +270,95 @@ class coalescence(cycle_tools_simple.simple,object):
 
         return minimum_basis
 
-    def breadth_first_tree(self,input_graph,root):
+    def edge_matrix(self,*args):
+
+        EC, minimum_basis, minimum_label,new_cycle=args
+        rows=len(EC.edges())
+        columns=len(minimum_basis)+1
+        E=np.zeros((rows,columns))
+
+        for idx_c,cycle in enumerate(minimum_basis):
+            E[minimum_label[idx_c],idx_c]=1
+
+        for m in new_cycle.edges(keys=True):
+            E[EC.edges[m]['label'],-1]=1
+
+        return E
+
+    def compute_linear_independence(self,E):
+
+        linear_independent=False
+        rows=len(E[:,0])
+        columns=len(E[0,:])
+
+        # calc echelon form
+        a_columns=np.arange(columns-1)
+        for column in a_columns:
+            idx_nz=np.nonzero(E[column:,column])[0]
+            idx=idx_nz[0]+column
+
+            if len(idx_nz)==1:
+                E[[column,idx_nz[0]+column],:]=E[[idx_nz[0]+column,column],:]
+
+            else:
+
+                new_idx=idx_nz[1:]+column
+                aux_E=np.add(E[new_idx],E[idx])
+                E[new_idx]=np.mod(aux_E,2)
+                E[[column,idx_nz[0]+column],:]=E[[idx_nz[0]+column,column],:]
+
+        r=np.nonzero(E[columns-1:,-1])[0]
+        if r.size:
+            linear_independent=True
+
+        return linear_independent
+
+    def breadth_first_tree(self,root):
 
         T=nx.Graph()
-        push_down={}
-        for i,e in enumerate(input_graph.edges()):
-            input_graph.edges[e]['label']=i
-        for n in input_graph.nodes():
-            push_down[n]=False
+        push_down=nx.get_node_attributes(self.G,'push')
+        len_n=len(self.G.nodes())
+
+        if len(push_down.keys())!=len_n:
+            push_down={}
+            for n in self.G.nodes():
+                push_down[n]=False
 
         push_down[root]=True
         root_queue=[]
-        labels_e = input_graph.edges(root,'label')
-        dict_labels_e={}
-        for le in labels_e:
-            dict_labels_e[(le[0],le[1])]=le[2]
-        sorted_label_e_list=sorted(dict_labels_e,key=dict_labels_e.__getitem__)
 
-        for e in sorted_label_e_list:
+        labels=self.G.edges(root)
+        dict_path={}
+        dict_path[root]=[root]
+        T,dict_path,root_queue=self.compute_sprouts(root,T,labels ,push_down,dict_path,root_queue)
+
+        while T.number_of_nodes() < len_n:
+            new_queue=[]
+            for q in root_queue:
+
+                labels=self.G.edges(q)
+                T,dict_path,new_queue=self.compute_sprouts(q,T,labels,push_down,dict_path,new_queue)
+
+            root_queue=new_queue[:]
+
+        return T,dict_path
+
+    def compute_sprouts(self,*args):
+
+        root,T,labels,push_down,dict_path,root_queue=args
+        for e in labels:
 
             if e[0]==root:
                 if not push_down[e[1]]:
                     T.add_edge(*e)
                     root_queue.append(e[1])
                     push_down[e[1]]=True
-
+                    dict_path[e[1]]=dict_path[root]+[e[1]]
             else:
                 if not push_down[e[0]]:
                     T.add_edge(*e)
-                    root_queue.append(e[1])
+                    root_queue.append(e[0])
                     push_down[e[0]]=True
+                    dict_path[e[0]]=dict_path[root]+[e[0]]
 
-        while T.number_of_nodes() < input_graph.number_of_nodes():
-            new_queue=[]
-            for q in root_queue:
-                labels_e = input_graph.edges(q,'label')
-                dict_labels_e={}
-                for le in labels_e:
-                    dict_labels_e[(le[0],le[1])]=le[2]
-                sorted_label_e_list=sorted(dict_labels_e,key=dict_labels_e.__getitem__)
-
-                for e in sorted_label_e_list:
-
-                    if e[0]==q:
-                        if not push_down[e[1]]:
-                            T.add_edge(*e)
-                            new_queue.append(e[1])
-                            push_down[e[1]]=True
-
-                    else:
-                        if not push_down[e[0]]:
-                            T.add_edge(*e)
-                            new_queue.append(e[1])
-                            push_down[e[0]]=True
-            root_queue=new_queue[:]
-
-        return T
-
-    def path_list(self,input_graph,root):
-
-        leaves=[]
-        paths={}
-
-        for n in input_graph.nodes():
-            if input_graph.degree(n) == 1:
-                leaves.append(n)
-        for n in leaves:
-            p=nx.shortest_path(nx.Graph(input_graph),source=root,target=n)
-            paths[tuple(p)]=len(p)
-
-        return paths
+        return T,dict_path,root_queue
