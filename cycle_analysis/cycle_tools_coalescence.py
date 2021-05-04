@@ -8,16 +8,17 @@
 import networkx as nx
 import numpy as np
 import sys
-import simple_cycle_tools
+import cycle_tools_simple
 
 class coalescence(cycle_tools_simple.simple,object):
 
     def __init__(self):
-        super(cycle_coalescence,self).__init__()
+        super(coalescence,self).__init__()
 
     def calc_cycle_asymmetry(self,input_graph):
 
-        minimum_basis=self.construct_minimum_basis(input_graph)
+        minimum_basis=self.construct_networkx_basis(input_graph)
+        
         cycle_tree=self.calc_cycle_coalescence(input_graph,minimum_basis)
         tree_asymmetry=self.calc_tree_asymmetry(cycle_tree)
 

@@ -186,12 +186,12 @@ class simple(cycle_tools.toolbox,object):
             idx_nz=np.nonzero(E[column:,column])[0]
             idx=idx_nz[0]+column
 
-            if len(idx_nz)==1
+            if len(idx_nz)==1:
                 E[[column,idx_nz[0]+column],:]=E[[idx_nz[0]+column,column],:]
 
             else:
 
-                new_idx=idx_nz[1:]+colum
+                new_idx=idx_nz[1:]+column
                 aux_E=np.add(E[new_idx],E[idx])
                 E[new_idx]=np.mod(aux_E,2)
                 E[[column,idx_nz[0]+column],:]=E[[idx_nz[0]+column,column],:]
