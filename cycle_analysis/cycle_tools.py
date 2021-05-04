@@ -5,8 +5,6 @@
 # @Last modified by:   kramer
 # @Last modified time: 04-05-2021
 
-
-
 import networkx as nx
 import numpy as np
 
