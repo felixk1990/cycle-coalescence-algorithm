@@ -10,7 +10,7 @@ import numpy as np
 import sys
 import simple_cycle_tools
 
-class cycle_coalescence(simple_cycle_tools,object):
+class coalescence(cycle_tools_simple.simple,object):
 
     def __init__(self):
         super(cycle_coalescence,self).__init__()

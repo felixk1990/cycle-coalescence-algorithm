@@ -12,10 +12,10 @@ import numpy as np
 import sys
 import cycle_tools
 
-class simple_cycle_tools(cycle_tools,object):
+class simple(cycle_tools.toolbox,object):
 
     def __init__(self):
-        super(simple_cycle_tools,self).__init__()
+        super(simple,self).__init__()
 
     def generate_cycle_lists(self):
 

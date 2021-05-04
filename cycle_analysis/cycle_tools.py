@@ -10,7 +10,7 @@
 import networkx as nx
 import numpy as np
 
-class cycle_tools():
+class toolbox():
 
     def __init__(self):
 
