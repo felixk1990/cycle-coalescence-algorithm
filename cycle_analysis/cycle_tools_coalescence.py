@@ -10,6 +10,8 @@ import numpy as np
 import sys
 import cycle_tools_simple
 
+
+print('release the kraken')
 class coalescence(cycle_tools_simple.simple,object):
 
     def __init__(self):
