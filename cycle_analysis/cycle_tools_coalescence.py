@@ -9,9 +9,13 @@ import networkx as nx
 import numpy as np
 import sys
 import cycle_tools_simple
+<<<<<<< HEAD
 
 
 print('release the kraken')
+=======
+print('hello beasty')
+>>>>>>> dev
 class coalescence(cycle_tools_simple.simple,object):
 
     def __init__(self):
