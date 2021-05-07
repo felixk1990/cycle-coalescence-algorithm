@@ -26,7 +26,7 @@ class coalescence(cycle_tools_simple.simple,object):
     def calc_cycle_coalescence(self,input_graph,cycle_basis):
 
         #create cycle_map_tree with cycles' edges as tree nodes
-        # print([len(cb.edges()) for cb in cycle_basis])
+
         cycle_tree=nx.Graph()
         for cycle in cycle_basis:
              cycle_tree.add_node(tuple(cycle.edges(keys=True)),label='base',weight=1.,branch_type='none',pos=(-1,-1))
@@ -206,45 +206,8 @@ class coalescence(cycle_tools_simple.simple,object):
                     EC.add_edge(*e,label=counter)
                     counter+=1
                     cycle_edges_in_basis=False
+
             #if cycle edges where not part of the supergraph yet then it becomes automatically part of the basis
-            # if not cycle_edges_in_basis:
-            #     minimum_basis.append(total_cycle_list[c])
-            #
-            # #if cycle edges are already included we check for linear dependece
-            # else:
-            #     linear_independent=False
-            #     rows=len(list(EC.edges()))
-            #     columns=len(minimum_basis)+1
-            #     E=np.zeros((rows,columns))
-            #     # translate the existent basis vectors into z2 representation
-            #     for idx_c,cycle in enumerate(minimum_basis+[total_cycle_list[c]]):
-            #         for m in cycle.edges(keys=True):
-            #             if EC.has_edge(*m):
-            #                 E[EC.edges[m]['label'],idx_c]=1
-            #
-            #     # calc echelon form
-            #     a_columns=np.arange(columns-1)
-            #     zwo=np.ones(columns)*2
-            #     for column in a_columns:
-            #         idx_nz=np.nonzero(E[column:,column])[0]
-            #         if idx_nz.size:
-            #             if len(idx_nz)==1:
-            #                 E[column,:],E[idx_nz[0]+column,:]=E[idx_nz[0]+column,:].copy(),E[column,:].copy()
-            #             else:
-            #                 for r in idx_nz[1:]:
-            #                     aux_E=np.add(E[r+column],E[idx_nz[0]+column])
-            #                     E[r+column]=np.mod(aux_E,zwo)
-            #                 E[column,:],E[idx_nz[0]+column,:]=E[idx_nz[0]+column,:].copy(),E[column,:].copy()
-            #         else:
-            #             sys.exit('Error: minimum_weight_basis containing inconsistencies ...')
-            #     # test echelon form for inconsistencies
-            #     for r in range(rows):
-            #         line_check=np.nonzero(E[r])[0]
-            #         if len(line_check)==1 and line_check[0]==(columns-1):
-            #             linear_independent=True
-            #             break
-            #     if linear_independent:
-            #         minimum_basis.append(total_cycle_list[c])
             if not cycle_edges_in_basis:
 
                 minimum_basis.append(new_cycle)
@@ -253,7 +216,7 @@ class coalescence(cycle_tools_simple.simple,object):
 
             #if cycle edges are already included we check for linear dependece
             else:
-                E=self.edge_matrix(EC, minimum_basis, minimum_label ,new_cycle)
+                E=self.edge_matrix(EC, len(minimum_basis), minimum_label ,new_cycle)
 
                 linear_independent=self.compute_linear_independence(E)
                 # print(linear_independent)
@@ -272,13 +235,13 @@ class coalescence(cycle_tools_simple.simple,object):
 
     def edge_matrix(self,*args):
 
-        EC, minimum_basis, minimum_label,new_cycle=args
+        EC,length_basis, minimum_label,new_cycle=args
         rows=len(EC.edges())
-        columns=len(minimum_basis)+1
+        columns=length_basis+1
         E=np.zeros((rows,columns))
 
-        for idx_c,cycle in enumerate(minimum_basis):
-            E[minimum_label[idx_c],idx_c]=1
+        for i in range(length_basis):
+            E[minimum_label[i],i]=1
 
         for m in new_cycle.edges(keys=True):
             E[EC.edges[m]['label'],-1]=1
