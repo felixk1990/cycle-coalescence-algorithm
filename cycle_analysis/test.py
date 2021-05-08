@@ -8,7 +8,7 @@
 import networkx as nx
 import numpy as np
 import random as rd
-import cycle_analysis.cycle_coalescence as cc
+import cycle_analysis.cycle_tools_simple as cc
 
 # generate example pattern random/nested/gradient for testing baseline values of the order parameter
 def generate_pattern(input_graph,mode):
@@ -115,7 +115,8 @@ def generate_pattern(input_graph,mode):
                 new_input_graph=nx.compose(new_input_graph,tile)
 
             input_graph=nx.Graph(new_input_graph)
-            basis=cc.construct_minimum_basis(new_input_graph)
+            T=cc.simple()
+            basis=T.construct_networkx_basis(new_input_graph)
             simple_basis=[nx.Graph(b) for b in basis]
             for b in simple_basis:
                 for n in b.nodes():

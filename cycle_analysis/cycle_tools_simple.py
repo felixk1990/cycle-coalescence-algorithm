@@ -5,12 +5,10 @@
 # @Last modified by:   kramer
 # @Last modified time: 04-05-2021
 
-
-
 import networkx as nx
 import numpy as np
 import sys
-import cycle_tools
+import cycle_analysis.cycle_tools as cycle_tools
 
 class simple(cycle_tools.toolbox,object):
 

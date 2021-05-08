@@ -7,8 +7,7 @@
 
 import networkx as nx
 import numpy as np
-import sys
-import cycle_tools_simple
+import cycle_analysis.cycle_tools_simple as cycle_tools_simple
 
 class coalescence(cycle_tools_simple.simple,object):
 
@@ -97,7 +96,6 @@ class coalescence(cycle_tools_simple.simple,object):
             c_weight[i]=self.cycle_tree.nodes[cycle_keys[i]]['weight']
             if self.cycle_tree.nodes[tuple(cycles_edge_sets[i])]['label']=='base':
                 self.cycle_tree.nodes[tuple(cycles_edge_sets[i])]['pos']=(self.counter_c,0)
-
                 self.counter_c+=1
 
         c_x=(self.cycle_tree.nodes[cycle_keys[0]]['pos'][0]+self.cycle_tree.nodes[cycle_keys[1]]['pos'][0])/2.
