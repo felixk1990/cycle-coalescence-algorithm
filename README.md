@@ -1,8 +1,5 @@
 # cycle-coalescence-algorithm
 ##  Introduction
-Hello everyone,
-
-I wrote this package during my PhD, when working on the characterization of transport networks.
 
 Have you ever wondered how cycles in graphs form a vector space and encapsulate nesting information? If so, were you never really sure how to deal with this? Here is a tool ready to use, enabling you to calculate the cycle bases, mapping them onto a merging tree, and analyze this tree's asymmetry.
 
@@ -12,7 +9,7 @@ This project is based on the algorithm published in 'Extracting Hidden Hierarchi
 
   ./notebook contains examples to play with in the form of jupyter notebooks
 ##  Installation
-python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps cycle_analysis
+pip install cycle_analysis
 ##  Usage
 
 ```python

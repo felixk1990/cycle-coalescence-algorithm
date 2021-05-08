@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="cycle_analysis", # Replace with your own username
-    version="0.0.1",
+    version="0.0.3",
     author="felixk1990",
     author_email="felixuwekramer@protonmail.com",
     description="cycle_analysis module, performing minimal cycle basis calculation and cycle coalescecne.",
