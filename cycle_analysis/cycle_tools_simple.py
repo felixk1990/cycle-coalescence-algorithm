@@ -21,8 +21,6 @@ class simple(cycle_tools.toolbox,object):
 
         total_cycle_dict={}
         total_cycle_list={}
-
-        self.G=nx.convert_node_labels_to_integers(self.G, first_label=0, ordering='default')
         nx.set_node_attributes(self.G,False,'push')
 
         # check for graph_type, then check for paralles in the Graph, if existent insert dummy nodes to resolve conflict, cast the network onto simple graph afterwards
@@ -81,6 +79,28 @@ class simple(cycle_tools.toolbox,object):
 
         return list_cycles
 
+    def construct_networkx_basis(self,input_graph):
+
+        C=self.construct_minimum_basis(input_graph)
+
+        networkx_basis=[]
+        for cs in C:
+            new_cycle=nx.Graph()
+            for e in cs:
+
+                new_cycle.add_edge(*e)
+                for k,v in self.G.edges[e].items():
+                    new_cycle.edges[e][k]=v
+
+            for n in new_cycle.nodes():
+
+                for k,v in self.G.nodes[n].items():
+                    new_cycle.nodes[n][k]=v
+
+            networkx_basis.append(new_cycle)
+
+        return networkx_basis
+
     def construct_minimum_basis(self,input_graph):
 
         # calc minimum weight basis and construct dictionary for weights of edges, takes a leave-less, connected, N > 1 SimpleGraph as input, no self-loops optimally, deviations are not raising any warnings
@@ -94,7 +114,7 @@ class simple(cycle_tools.toolbox,object):
         for c,e in total_cycle_dict.items():
             total_cycle_len[c]=len(e)
         sorted_cycle_list=sorted(total_cycle_len,key=total_cycle_len.__getitem__)
-        
+
         minimum_basis=[]
         minimum_label=[]
         EC=nx.Graph()
@@ -120,7 +140,7 @@ class simple(cycle_tools.toolbox,object):
 
             #if cycle edges are already included we check for linear dependece
             else:
-                E=self.edge_matrix(EC, minimum_basis, minimum_label ,new_cycle)
+                E=self.edge_matrix(EC, len(minimum_basis), minimum_label ,new_cycle)
 
                 linear_independent=self.compute_linear_independence(E)
                 # print(linear_independent)
@@ -137,37 +157,15 @@ class simple(cycle_tools.toolbox,object):
 
         return minimum_basis
 
-    def construct_networkx_basis(self,input_graph):
-
-        C=self.construct_minimum_basis(input_graph)
-
-        networkx_basis=[]
-        for cs in C:
-            new_cycle=nx.Graph()
-            for e in cs:
-
-                new_cycle.add_edge(*e)
-                for k,v in self.G.edges[e].items():
-                    new_cycle.edges[e][k]=v
-
-            for n in new_cycle.nodes():
-
-                for k,v in self.G.nodes[n].items():
-                    new_cycle.nodes[n][k]=v
-
-            networkx_basis.append(new_cycle)
-
-        return networkx_basis
-
     def edge_matrix(self,*args):
 
-        EC, minimum_basis, minimum_label,new_cycle=args
+        EC, length_basis, minimum_label,new_cycle=args
         rows=len(EC.edges())
-        columns=len(minimum_basis)+1
+        columns=length_basis+1
         E=np.zeros((rows,columns))
 
-        for idx_c,cycle in enumerate(minimum_basis):
-            E[minimum_label[idx_c],idx_c]=1
+        for i in range(length_basis):
+            E[minimum_label[i],i]=1
 
         for m in new_cycle:
             E[EC.edges[m]['label'],-1]=1
