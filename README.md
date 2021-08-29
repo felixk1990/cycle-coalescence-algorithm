@@ -48,5 +48,4 @@ gradient weight distribution\
 ## Acknowledgement
 ```cycle_analysis``` written by Felix Kramer
 
-This implementation is based on the cycle coalescence algorithm as described by Modes et al, 2016.
-https://journals.aps.org/prx/pdf/10.1103/PhysRevX.6.031009. Please acknowledge if used for any further publication or projects.
+This implementation is based on the cycle coalescence algorithm as described by [Modes et al, 2016](https://journals.aps.org/prx/pdf/10.1103/PhysRevX.6.031009). Please acknowledge if used for any further publication or projects.
