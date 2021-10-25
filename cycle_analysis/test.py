@@ -2,187 +2,204 @@
 # @Date:   18-02-2019
 # @Email:  felix.kramer@hotmail.de
 # @Project: cycle-coalescecne-algorithm
-# @Last modified by:   kramer
-# @Last modified time: 09-01-2021
+# @Last modified by:    Felix Kramer
+# @Last modified time: 2021-10-24T23:10:21+02:00
 
 import networkx as nx
 import numpy as np
 import random as rd
 import cycle_analysis.cycle_tools_simple as cc
 
-# generate example pattern random/nested/gradient for testing baseline values of the order parameter
-def generate_pattern(input_graph,mode):
-    iteration=0
-    list_n=list(input_graph.nodes())
-    pos=nx.spectral_layout(input_graph)
+
+# generate example pattern random/nested/gradient for testing baseline values
+# of the order parameter
+def generate_pattern(input_graph, mode):
+
+    iteration = 0
+    list_n = list(input_graph.nodes())
+    pos = nx.spectral_layout(input_graph)
     for n in pos.keys():
-        input_graph.nodes[n]['pos']=pos[n]
+        input_graph.nodes[n]['pos'] = pos[n]
+
     if 'random' == mode:
 
         for e in input_graph.edges():
-            input_graph.edges[e]['weight']=rd.uniform(0.,1.)*10.
-
+            input_graph.edges[e]['weight'] = rd.uniform(0., 1.)*10.
 
     elif 'gradient' == mode:
 
-
-        idx_min=np.argmin([ input_graph.nodes[n]['pos'][0]  for n in list_n])
-        ref_p=input_graph.nodes[list_n[idx_min]]['pos']
+        idx_min = np.argmin([input_graph.nodes[n]['pos'][0] for n in list_n])
+        ref_p = input_graph.nodes[list_n[idx_min]]['pos']
         for e in input_graph.edges():
-            p=(np.array(input_graph.nodes[e[0]]['pos'])+np.array(input_graph.nodes[e[1]]['pos']))/2.
-            r=np.linalg.norm(p-ref_p)
-            input_graph.edges[e]['weight']=1./r
+            q1 = np.array(input_graph.nodes[e[0]]['pos'])
+            q2 = np.array(input_graph.nodes[e[1]]['pos'])
+            p = (q1 + q2)/2.
+            r = np.linalg.norm(p-ref_p)
+            input_graph.edges[e]['weight'] = 1./r
 
     elif 'nested_square' == mode:
 
-        corners=get_corners(input_graph)
-        my_tiles=get_first_tile(input_graph, corners)
+        corners = get_corners(input_graph)
+        my_tiles = get_first_tile(input_graph, corners)
 
-        E=nx.number_of_edges(input_graph)
-        N=nx.number_of_nodes(input_graph)
+        E = nx.number_of_edges(input_graph)
+        N = nx.number_of_nodes(input_graph)
 
-        counter=0
-        go_on=True
+        counter = 0
+        go_on = True
         while go_on:
-            new_my_tiles=[]
-            graph_seen=nx.Graph()
-            dict_seen={}
+
+            new_my_tiles = []
+            graph_seen = nx.Graph()
+            dict_seen = {}
+
             for tile in my_tiles:
-                list_e=list(tile.edges())
-                sub_tile=nx.Graph()
+                list_e = list(tile.edges())
+                sub_tile = nx.Graph()
 
-                sub_tile.add_edge(*list_e[0],weight=tile.edges[list_e[0]]['weight'])
-                push_1=[0]
-                push_2=[]
+                w = tile.edges[list_e[0]]['weight']
+                sub_tile.add_edge(*list_e[0], weight=w)
+                push_1 = [0]
+                push_2 = []
 
-                for i,e in enumerate(list_e[1:]):
-                    if ( sub_tile.has_node(e[0]) or sub_tile.has_node(e[1]) ):
+                for i, e in enumerate(list_e[1:]):
+                    if (sub_tile.has_node(e[0]) or sub_tile.has_node(e[1])):
                         push_2.append(i+1)
                     else:
                         push_1.append(i+1)
 
-                pos=[]
-                for i,n in enumerate(tile):
-                    p=tile.nodes[n]['pos']
-                    sub_tile.add_node(n,pos=p)
+                pos = []
+                for i, n in enumerate(tile):
+                    p = tile.nodes[n]['pos']
+                    sub_tile.add_node(n, pos=p)
                     pos.append(p)
 
-                my_center=counter
-                sub_tile.add_node(my_center,pos=np.mean(pos,axis=0))
-                counter+=1
-                for i,e in enumerate(list_e[1:]):
-                    sub_tile.add_edge(*e,weight=tile.edges[e]['weight'])
-                sub_w=np.amin(list(nx.get_edge_attributes(sub_tile,'weight').values()))/2.
+                my_center = counter
+                sub_tile.add_node(my_center, pos=np.mean(pos, axis=0))
+                counter += 1
+                for i, e in enumerate(list_e[1:]):
+                    sub_tile.add_edge(*e, weight=tile.edges[e]['weight'])
 
-                push_nodes_1=[]
-                push_nodes_2=[]
+                w = list(nx.get_edge_attributes(sub_tile, 'weight').values())
+                sub_w = np.amin(w)/2.
 
-                for i,e in enumerate(list_e):
+                push_nodes_1 = []
+                push_nodes_2 = []
 
-                    if  i in push_1:
+                for i, e in enumerate(list_e):
 
-                            if graph_seen.has_edge(*e):
+                    if i in push_1:
 
-                                sub_tile,node_id=use_a_brick( sub_tile, e, dict_seen)
-                                push_nodes_1.append(node_id)
-                            else:
-                                push_nodes_1.append(counter)
-                                sub_tile=form_a_brick(tile,sub_tile,counter,e, dict_seen)
-                                graph_seen.add_edge(*e)
-                                counter+=1
+                        if graph_seen.has_edge(*e):
+
+                            sub_tile, node_id = use_a_brick(sub_tile, e, dict_seen)
+                            push_nodes_1.append(node_id)
+                        else:
+                            push_nodes_1.append(counter)
+                            sub_tile = form_a_brick(tile, sub_tile, counter, e, dict_seen)
+                            graph_seen.add_edge(*e)
+                            counter += 1
 
                     elif i in push_2:
 
-                            if graph_seen.has_edge(*e):
+                        if graph_seen.has_edge(*e):
 
-                                sub_tile,node_id=use_a_brick( sub_tile, e, dict_seen)
-                                push_nodes_2.append(node_id)
-                            else:
-                                push_nodes_2.append(counter)
-                                sub_tile=form_a_brick(tile,sub_tile,counter,e, dict_seen)
-                                graph_seen.add_edge(*e)
-                                counter+=1
+                            sub_tile, node_id = use_a_brick(sub_tile, e, dict_seen)
+                            push_nodes_2.append(node_id)
+                        else:
+                            push_nodes_2.append(counter)
+                            sub_tile = form_a_brick(tile, sub_tile, counter, e, dict_seen)
+                            graph_seen.add_edge(*e)
+                            counter += 1
 
                 for i in push_nodes_1:
-                    sub_tile.add_edge(my_center,i,weight=sub_w)
+                    sub_tile.add_edge(my_center, i, weight=sub_w)
                 for i in push_nodes_2:
-                    sub_tile.add_edge(my_center,i,weight=sub_w*0.9)
+                    sub_tile.add_edge(my_center, i, weight=sub_w*0.9)
 
                 new_my_tiles.append(sub_tile)
 
-            new_input_graph=nx.Graph()
+            new_input_graph = nx.Graph()
             for tile in new_my_tiles:
-                new_input_graph=nx.compose(new_input_graph,tile)
+                new_input_graph = nx.compose(new_input_graph, tile)
 
-            input_graph=nx.Graph(new_input_graph)
-            T=cc.simple()
-            basis=T.construct_networkx_basis(new_input_graph)
-            simple_basis=[nx.Graph(b) for b in basis]
+            input_graph = nx.Graph(new_input_graph)
+            T = cc.simple()
+            basis = T.construct_networkx_basis(new_input_graph)
+            simple_basis = [nx.Graph(b) for b in basis]
             for b in simple_basis:
                 for n in b.nodes():
-                    b.nodes[n]['pos']=input_graph.nodes[n]['pos']
+                    b.nodes[n]['pos'] = input_graph.nodes[n]['pos']
                 for e in b.edges():
-                    b.edges[e]['weight']=input_graph.edges[e]['weight']
-            my_tiles=simple_basis
+                    b.edges[e]['weight'] = input_graph.edges[e]['weight']
+            my_tiles = simple_basis
 
-            iteration+=1
-            if (nx.number_of_edges(new_input_graph)==E or nx.number_of_nodes(new_input_graph)==N) or iteration==3 :
-                input_graph=new_input_graph
-                go_on=False
+            iteration += 1
+            numE = list(nx.get_edge_attributes(sub_tile, 'weight').values())
+            numN = nx.number_of_nodes(new_input_graph)
+            if numE == E or numN == N or iteration == 3:
+                input_graph = new_input_graph
+                go_on = False
                 break
 
     return input_graph
 
+
 def get_corners(input_graph):
 
-    dim=len(list(nx.get_node_attributes(input_graph,'pos').values())[0])
-    corners=[]
-    if dim==2:
-        corners=[n for n in input_graph.nodes() if input_graph.degree(n)==2]
-    elif dim==3:
-        corners=[n for n in input_graph.nodes() if input_graph.degree(n)==3]
+    dim = len(list(nx.get_node_attributes(input_graph, 'pos').values())[0])
+    corners = []
+    if dim == 2:
+        corners = [n for n in input_graph.nodes() if input_graph.degree(n) == 2]
+    elif dim == 3:
+        corners = [n for n in input_graph.nodes() if input_graph.degree(n) == 3]
 
     return corners
 
+
 def get_first_tile(input_graph, corners):
 
-    side_length=np.sqrt(nx.number_of_nodes( input_graph) )
-    w=5.
-    tile=nx.Graph()
-    for i,n in enumerate(corners):
-        tile.add_node(n,pos=input_graph.nodes[n]['pos'])
-    for i,n in enumerate(corners[:-1]):
-        for j,m in enumerate(corners[i+1:]):
-            path=nx.shortest_path(input_graph,n,m)
-            if len(path)==side_length:
-                tile.add_edge(n,m,weight=w)
+    side_length = np.sqrt(nx.number_of_nodes(input_graph))
+    w = 5.
+    tile = nx.Graph()
+    for i, n in enumerate(corners):
+        tile.add_node(n, pos=input_graph.nodes[n]['pos'])
+    for i, n in enumerate(corners[:-1]):
+        for j, m in enumerate(corners[i+1:]):
+            path = nx.shortest_path(input_graph, n, m)
+            if len(path) == side_length:
+                tile.add_edge(n, m, weight=w)
 
     return [tile]
 
-def use_a_brick( sub_tile, edge, dict_seen):
+
+def use_a_brick(sub_tile, edge, dict_seen):
 
     if edge in dict_seen:
-        brick=dict_seen[edge]
+        brick = dict_seen[edge]
     else:
-        brick=dict_seen[(edge[1],edge[0])]
+        brick = dict_seen[(edge[1], edge[0])]
+
     for n in brick.nodes():
-        if brick.degree(n)==2:
-            node_id=n
-    sub_tile=nx.compose(sub_tile,brick)
+        if brick.degree(n) == 2:
+            node_id = n
+
+    sub_tile = nx.compose(sub_tile, brick)
     sub_tile.remove_edge(*edge)
 
-    return sub_tile,node_id
+    return sub_tile, node_id
 
-def form_a_brick(tile, sub_tile, node_id, edge,dict_seen):
 
-    pos=(tile.nodes[ edge[0]]['pos'] + tile.nodes[ edge[1]]['pos'])/2.
+def form_a_brick(tile, sub_tile, node_id, edge, dict_seen):
 
-    brick=nx.Graph()
-    brick.add_node(node_id,pos=pos)
-    brick.add_edge(node_id, edge[0],weight=sub_tile.edges[ edge]['weight'])
-    brick.add_edge(node_id, edge[1],weight=sub_tile.edges[ edge]['weight'])
-    sub_tile=nx.compose(sub_tile,brick)
+    pos = (tile.nodes[edge[0]]['pos'] + tile.nodes[edge[1]]['pos'])/2.
+
+    brick = nx.Graph()
+    brick.add_node(node_id, pos=pos)
+    brick.add_edge(node_id, edge[0], weight=sub_tile.edges[edge]['weight'])
+    brick.add_edge(node_id, edge[1], weight=sub_tile.edges[edge]['weight'])
+    sub_tile = nx.compose(sub_tile, brick)
 
     sub_tile.remove_edge(*edge)
-    dict_seen[edge]=brick
+    dict_seen[edge] = brick
     return sub_tile
