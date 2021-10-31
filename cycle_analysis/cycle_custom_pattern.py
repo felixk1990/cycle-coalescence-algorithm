@@ -3,7 +3,7 @@
 # @Email:  felix.kramer@hotmail.de
 # @Project: cycle-coalescecne-algorithm
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-28T23:15:04+02:00
+# @Last modified time: 2021-10-31T13:16:38+01:00
 
 import networkx as nx
 import numpy as np
@@ -13,21 +13,24 @@ import cycle_analysis.cycle_tools_simple as cc
 # of the order parameter
 
 
-def generate_pattern(nx_graph, mode):
+def generate_pattern(nx_graph, mode='random'):
 
     pos = nx.spectral_layout(nx_graph)
     for n in pos.keys():
         nx_graph.nodes[n]['pos'] = pos[n]
 
-    if 'random' == mode:
+    func = {
+        'random': generate_pattern_random,
+        'gradient': generate_pattern_gradient,
+        'nested_square': generate_pattern_nestedSquare
+    }
 
-        generate_pattern_random(nx_graph)
+    if mode in func.keys():
+        print('Initializing '+str(mode)+' pattern')
+        nx_graph = func[mode](nx_graph)
 
-    elif 'gradient' == mode:
-        generate_pattern_gradient(nx_graph)
-
-    elif 'nested_square' == mode:
-        generate_pattern_nestedSquare(nx_graph)
+    else:
+        raise Exception("Sorry, this pattern is not implemented :(")
 
     return nx_graph
 
@@ -36,6 +39,8 @@ def generate_pattern_random(nx_graph):
 
     for e in nx_graph.edges():
         nx_graph.edges[e]['weight'] = rd.uniform(0., 1.)*10.
+
+    return nx_graph
 
 
 def generate_pattern_gradient(nx_graph):
@@ -49,6 +54,8 @@ def generate_pattern_gradient(nx_graph):
         p = (q1 + q2)/2.
         r = np.linalg.norm(p-ref_p)
         nx_graph.edges[e]['weight'] = 1./r
+
+    return nx_graph
 
 
 def generate_pattern_nestedSquare(nx_graph):
@@ -85,15 +92,17 @@ def generate_pattern_nestedSquare(nx_graph):
                 b.nodes[n]['pos'] = nx_graph.nodes[n]['pos']
             for e in b.edges():
                 b.edges[e]['weight'] = nx_graph.edges[e]['weight']
-        my_tiles = simple_basis
+        my_tiles = simple_basis[:]
 
         iteration += 1
         numE = list(nx.get_edge_attributes(sub_tile, 'weight').values())
         numN = nx.number_of_nodes(new_nx_graph)
         if numE == E or numN == N or iteration == 3:
-            nx_graph = new_nx_graph
+            nx_graph = nx.Graph(new_nx_graph)
             go_on = False
             break
+
+    return nx_graph
 
 
 def calc_new_tile(new_my_tiles, tile, graph_seen, dict_seen, counter):

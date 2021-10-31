@@ -3,19 +3,19 @@
 # @Email:  kramer@mpi-cbg.de
 # @Project: go-with-the-flow
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-28T20:28:13+02:00
+# @Last modified time: 2021-10-31T13:26:56+01:00
 # @License: MIT
 import networkx as nx
 import numpy as np
 from cycle_analysis import cycle_tools_coalescence as ctc
-from cycle_analysis import test as cat
+import cycle_analysis.cycle_custom_pattern as ccp
 
 
 def test_nested_square():
 
     n = 7
     G = nx.grid_graph((n, n, 1))
-    G = cat.generate_pattern(G, 'nested_square')
+    G = ccp.generate_pattern(G, 'nested_square')
 
     T = ctc.coalescence()
     dict_asymmetry = T.calc_tree_asymmetry()
@@ -29,7 +29,7 @@ def test_gradient():
 
     n = 7
     G = nx.grid_graph((n, n, 1))
-    G = cat.generate_pattern(G, 'gradient')
+    G = ccp.generate_pattern(G, 'gradient')
 
     T = ctc.coalescence()
     dict_asymmetry = T.calc_tree_asymmetry()
