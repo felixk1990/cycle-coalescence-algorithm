@@ -1,9 +1,10 @@
 # @Author: Felix Kramer <kramer>
 # @Date:   18-02-2019
 # @Email:  felix.kramer@hotmail.de
-# @Project: cycle-coalescecne-algorithm
+# @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-28T21:59:23+02:00
+# @Last modified time: 2021-11-02T11:22:02+01:00
+# @License: MIT
 import networkx as nx
 import numpy as np
 import cycle_analysis.cycle_tools_simple as cycle_tools_simple
@@ -63,15 +64,18 @@ class coalescence(cycle_tools_simple.simple, object):
 
                 cycle_1 = cycle_basis[idx_list[0]]
                 cycle_2 = cycle_basis[idx_list[1]]
-                merged_cycle = self.merge_cycles(cycle_1, cycle_2)
+                new_cycle = self.merge_cycles(cycle_1, cycle_2)
+
+                for e in merged_cycle.edges():
+                    new_cycle.graph['cycle_weight'] += self.G.edges[e]['weight']
 
                 cycle_basis.remove(cycle_1)
                 cycle_basis.remove(cycle_2)
-                cycle_basis.append(merged_cycle)
+                cycle_basis.append(new_cycle)
 
                 # build up the merging tree, set leave weights to nodes,
                 # set asymetry value to binary branchings
-                self.build_cycle_tree(cycle_1, cycle_2, merged_cycle)
+                self.build_cycle_tree(cycle_1, cycle_2, new_cycle)
                 for n in self.cycle_tree.nodes():
                     if self.cycle_tree.nodes[n]['pos'][0] == -1:
                         self.cycle_tree.nodes[n]['pos'] = (self.counter_c, 0)
@@ -145,8 +149,8 @@ class coalescence(cycle_tools_simple.simple, object):
                 else:
                     merged_cycle.add_edge(*e)
 
-        for e in merged_cycle.edges():
-            merged_cycle.graph['cycle_weight'] += self.G.edges[e]['weight']
+        # for e in merged_cycle.edges():
+        #     merged_cycle.graph['cycle_weight'] += self.G.edges[e]['weight']
 
         list_merged = list(merged_cycle.nodes())
         for n in list_merged:

@@ -1,10 +1,10 @@
 # @Author: Felix Kramer <kramer>
 # @Date:   18-02-2019
 # @Email:  felix.kramer@hotmail.de
-# @Project: cycle-coalescecne-algorithm
+# @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-31T13:16:38+01:00
-
+# @Last modified time: 2021-11-02T10:41:46+01:00
+# @License: MIT
 import networkx as nx
 import numpy as np
 import random as rd

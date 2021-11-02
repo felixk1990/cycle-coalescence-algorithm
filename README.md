@@ -4,7 +4,7 @@ Have you ever wondered how cycles in graphs form a vector space and encapsulate 
 
 ##  Introduction
 This python module allows users to analyze weighted, undirected simple graphs for their nested cycle structure by performing two major functions: Calculating minimal cycle bases (Horton algorithm) and computing the merging tree (cycle coalescence algorithm). The algorithm is described in "Modes et al,'Extracting Hidden Hierarchies in 3D Distribution Networks', 2016" and basically follows the shown scheme below:
-  -  All fundamentals minimal cyles (minimal number of edges) are listed in the weighted graph G and mapped onto the leaves of a new tree T. 
+  -  All fundamentals minimal cyles (minimal number of edges) are listed in the weighted graph G and mapped onto the leaves of a new tree T.
   -  Then one identifies the lightest edge e in G and merges the two smallest cycles along this edge, creating a new vertex in the tree T for the merger cycle
   -  remove the original two cycles and proceed with the next lightest edge e until all cycles in G are merged
   -  finally calculate the tree asymmetry using the techniques of "Van-Pelt et al, 'Tree Asymmetry—A Sensitive and Practical Measure for Binary Topological Trees' ,1992"
@@ -22,12 +22,12 @@ Call cycle_analysis.cycle_coalescence for graph analysis, while cycle_analysis.t
 ```python
 import networkx as nx
 import cycle_analysis.cycle_coalescence as cc
-import cycle_analysis.test as cat
+import cycle_analysis.cycle_custom_pattern as ccp
 
 # generate a dummy graph for testing
 # put an edge weight distribution on the system, available are random/gradient/nested_square
 G=nx.grid_graph((7,7,1))
-G=cat.generate_pattern(G,'nested_square')
+G=ccp.generate_pattern(G,'nested_square')
 
 # merge all shortest cycles and calc the merging tree's asymmetry for each branch
 asymmetry=cc.calc_cycle_asymmetry(G)

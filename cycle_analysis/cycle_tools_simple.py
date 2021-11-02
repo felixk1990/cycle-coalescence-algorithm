@@ -1,9 +1,9 @@
 # @Author: Felix Kramer <kramer>
 # @Date:   04-05-2021
 # @Email:  kramer@mpi-cbg.de
-# @Project: phd_network_remodelling
+# @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-28T22:52:18+02:00
+# @Last modified time: 2021-11-02T10:40:28+01:00
 import networkx as nx
 import numpy as np
 import sys

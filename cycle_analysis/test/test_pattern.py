@@ -1,9 +1,9 @@
 # @Author:  Felix Kramer
 # @Date:   2021-10-24T22:29:34+02:00
 # @Email:  kramer@mpi-cbg.de
-# @Project: go-with-the-flow
+# @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-31T13:26:56+01:00
+# @Last modified time: 2021-11-02T10:40:30+01:00
 # @License: MIT
 import networkx as nx
 import numpy as np
