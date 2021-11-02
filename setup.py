@@ -3,7 +3,7 @@
 # @Email:  kramer@mpi-cbg.de
 # @Project: go-with-the-flow
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-10-24T22:39:56+02:00
+# @Last modified time: 2021-11-02T11:26:43+01:00
 # @License: MIT
 
 
@@ -14,7 +14,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name = "cycle_analysis", # Replace with your own username
-    version = "0.0.4",
+    version = "0.0.5",
     author = "felixk1990",
     author_email = "felixuwekramer@protonmail.com",
     description = "cycle_analysis module, performing minimal cycle basis calculation and the cycle coalescecne algorithm.",
