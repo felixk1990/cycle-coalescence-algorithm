@@ -41,7 +41,7 @@ random weight distribution\
 ![random](https://github.com/felixk1990/cycle-coalescence-algorithm/blob/main/gallery/random.png)
 
 nested square weight distribution\
-![nested](https://github.com/felixk1990/cycle-coalescence-algorithm/blob/main/gallery/nested_square.png)
+![nested](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/nested_square.png)
 
 gradient weight distribution\
 ![gradient](https://github.com/felixk1990/cycle-coalescence-algorithm/blob/main/gallery/gradient.png)

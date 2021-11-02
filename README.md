@@ -9,7 +9,7 @@ This python module allows users to analyze weighted, undirected simple graphs fo
   -  remove the original two cycles and proceed with the next lightest edge e until all cycles in G are merged
   -  finally calculate the tree asymmetry using the techniques of "Van-Pelt et al, 'Tree Asymmetry—A Sensitive and Practical Measure for Binary Topological Trees' ,1992"
   -  the asymmetry orderparameter will be be 1 for perfecly asymmetric trees and 0 for perfectly symmetric trees
-  ![modes](https://github.com/felixk1990/cycle-coalescence-algorithm/blob/main/gallery/modes_merging_algorithm_2016.png)
+  ![modes](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/gallery/modes_merging_algorithm_2016.png)
   Figure taken from: Modes et al,'Extracting Hidden Hierarchies in 3D Distribution Networks', 2016
 
 
@@ -38,13 +38,13 @@ print(asymmetry)
 ``` python3.6+ ```,``` networkx ```, ``` numpy ```
 ##  Gallery
 random weight distribution\
-![random](https://github.com/felixk1990/cycle-coalescence-algorithm/blob/main/gallery/random.png)
+![random](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/random.png)
 
 nested square weight distribution\
 ![nested](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/nested_square.png)
 
 gradient weight distribution\
-![gradient](https://github.com/felixk1990/cycle-coalescence-algorithm/blob/main/gallery/gradient.png)
+![gradient](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/gradient.png)
 ## Acknowledgement
 ```cycle_analysis``` written by Felix Kramer
 
