@@ -3,7 +3,7 @@
 # @Email:  felix.kramer@hotmail.de
 # @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-02T11:22:02+01:00
+# @Last modified time: 2021-11-02T11:42:17+01:00
 # @License: MIT
 import networkx as nx
 import numpy as np
