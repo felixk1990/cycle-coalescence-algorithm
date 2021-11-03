@@ -5,6 +5,7 @@
 # @Last modified by:    Felix Kramer
 # @Last modified time: 2021-11-02T11:54:05+01:00
 # @License: MIT
-site_name: My Docs
+site_name: cycle_analysis
+site_url: https://example.com/
 theme: readthedocs
 docs_dir: docs/sources
