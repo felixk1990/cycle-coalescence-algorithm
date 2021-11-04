@@ -3,7 +3,7 @@
 # @Email:  felix.kramer@hotmail.de
 # @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-02T10:41:46+01:00
+# @Last modified time: 2021-11-04T14:58:34+01:00
 # @License: MIT
 import networkx as nx
 import numpy as np
@@ -84,7 +84,7 @@ def generate_pattern_nestedSquare(nx_graph):
             new_nx_graph = nx.compose(new_nx_graph, tile)
 
         nx_graph = nx.Graph(new_nx_graph)
-        T = cc.simple()
+        T = cc.simple_cycles()
         basis = T.construct_networkx_basis(new_nx_graph)
         simple_basis = [nx.Graph(b) for b in basis]
         for b in simple_basis:
