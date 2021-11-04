@@ -3,14 +3,14 @@
 # @Email:  felix.kramer@hotmail.de
 # @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-02T11:42:17+01:00
+# @Last modified time: 2021-11-04T22:12:19+01:00
 # @License: MIT
 import networkx as nx
 import numpy as np
 import cycle_analysis.cycle_tools_simple as cycle_tools_simple
 
 
-class coalescence(cycle_tools_simple.simple, object):
+class coalescence(cycle_tools_simple.simple_cycles, object):
 
     def __init__(self):
         super(coalescence, self).__init__()
@@ -19,13 +19,45 @@ class coalescence(cycle_tools_simple.simple, object):
 
     def calc_cycle_asymmetry(self, input_graph):
 
+        """
+        Given a Graph with a cyclic backbone, calculate the minimal
+        (topological) cycle basis
+
+        Args:
+            input_graph (nx.Graph): A networkx graph with 'many' cycles
+
+        Returns:
+            dictionary: A dictionary vertices with respective asymmetries
+
+        Raises:
+            Exception: TO BE IMPLEMENTED
+        """
+
         minimum_basis = self.construct_networkx_basis(input_graph)
-        self.calc_cycle_coalescence(input_graph, minimum_basis)
-        tree_asymmetry = self.calc_tree_asymmetry()
+        for mb in minimum_basis:
+            mb.graph['cycle_weight'] = nx.number_of_edges(mb)
+
+        cycle_tree = self.calc_cycle_coalescence(input_graph, minimum_basis)
+        tree_asymmetry = self.calc_tree_asymmetry(cycle_tree)
 
         return tree_asymmetry
 
     def calc_cycle_coalescence(self, input_graph, cycle_basis):
+
+        """
+        Builds the merging tree according to the cycle coalescence algorithm.
+
+        Args:
+            input_graph (nx.Graph): A networkx graph with 'many' cycles
+            cycle_basis (list): List of networkx cycles
+
+        Returns:
+            nx.Graph: Weighted Merging Tree
+
+        Raises:
+            Exception: TO BE IMPLEMENTED
+
+        """
 
         self.G = nx.Graph(input_graph)
 
@@ -66,7 +98,7 @@ class coalescence(cycle_tools_simple.simple, object):
                 cycle_2 = cycle_basis[idx_list[1]]
                 new_cycle = self.merge_cycles(cycle_1, cycle_2)
 
-                for e in merged_cycle.edges():
+                for e in new_cycle.edges():
                     new_cycle.graph['cycle_weight'] += self.G.edges[e]['weight']
 
                 cycle_basis.remove(cycle_1)
@@ -86,18 +118,47 @@ class coalescence(cycle_tools_simple.simple, object):
 
         return self.cycle_tree
 
-    def calc_tree_asymmetry(self):
+    def calc_tree_asymmetry(self, cycle_tree):
+
+        """
+        Computes  binary networkx tree and calculates its asymmetry.
+
+        Args:
+            cycle_tree (nx.Graph): A networkx graph with weighted vertices
+
+        Returns:
+            dictionary: A dictionary which holds the asymetry value for any
+            vertex in the graph
+
+        Raises:
+            Exception: TO BE IMPLEMENTED
+
+        """
 
         dict_asymmetry = {}
 
-        for n in self.cycle_tree.nodes():
+        for n in cycle_tree.nodes():
 
-            if self.cycle_tree.nodes[n]['branch_type'] == 'vanpelt_2':
-                dict_asymmetry[n] = (self.cycle_tree.nodes[n]['asymmetry'])
+            if cycle_tree.nodes[n]['branch_type'] == 'vanpelt_2':
+                dict_asymmetry[n] = (cycle_tree.nodes[n]['asymmetry'])
 
         return dict_asymmetry
 
     def build_cycle_tree(self, cycle_1, cycle_2, merged_cycle):
+
+        """
+        Systematically build a merger tree and save the respective asymetry
+        values and spatial layout
+
+        Args:
+            cycle_1 (nx.Graph): A networkx graph, cycle
+            cycle_2 (nx.Graph): A networkx graph, cycle
+            merged_cycle (nx.Graph): A networkx graph, cycle
+
+        Raises:
+            Exception: TO BE IMPLEMENTED
+
+        """
 
         cyc_E_sets = [cycle_1.edges(), cycle_2.edges(), merged_cycle.edges()]
         cyc_key = [tuple(ces) for ces in cyc_E_sets]
@@ -139,6 +200,21 @@ class coalescence(cycle_tools_simple.simple, object):
 
     def merge_cycles(self, cycle_1, cycle_2):
 
+        """
+        Merge two graph cycles according to common cycle arithmetics in Z2.
+
+        Args:
+            cycle_1 (nx.Graph): A networkx graph, cycle
+            cycle_2 (nx.Graph): A networkx graph, cycle
+
+        Returns:
+            merged_cycle (nx.Graph): A networkx graph, cycle
+
+        Raises:
+            Exception: TO BE IMPLEMENTED
+
+        """
+
         cycles_edge_sets = [cycle_1.edges(), cycle_2.edges()]
         merged_cycle = nx.Graph()
         merged_cycle.graph['cycle_weight'] = 0
@@ -158,39 +234,3 @@ class coalescence(cycle_tools_simple.simple, object):
                 merged_cycle.remove_node(n)
 
         return merged_cycle
-
-    def compute_cycles_superlist(self, root):
-
-        spanning_tree, dict_path = self.breadth_first_tree(root)
-        diff_graph = nx.difference(self.G, spanning_tree)
-        list_cycles = []
-        for e in diff_graph.edges():
-
-            simple_cycle, cycle_edges = self.find_cycle(dict_path, e, root)
-            list_cycles.append(cycle_edges)
-
-        return list_cycles
-
-    def construct_networkx_basis(self, input_graph):
-
-        C = self.construct_minimum_basis(input_graph)
-
-        networkx_basis = []
-        for cs in C:
-            new_cycle = nx.Graph()
-            new_cycle.graph['cycle_weight'] = 0.
-            for e in cs:
-
-                new_cycle.add_edge(*e)
-                for k, v in self.G.edges[e].items():
-                    new_cycle.edges[e][k] = v
-                new_cycle.graph['cycle_weight'] += 1.
-
-            for n in new_cycle.nodes():
-
-                for k, v in self.G.nodes[n].items():
-                    new_cycle.nodes[n][k] = v
-
-            networkx_basis.append(new_cycle)
-
-        return networkx_basis

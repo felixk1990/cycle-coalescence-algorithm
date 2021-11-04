@@ -3,19 +3,46 @@
 # @Email:  kramer@mpi-cbg.de
 # @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-02T10:40:28+01:00
+# @Last modified time: 2021-11-04T22:31:34+01:00
 import networkx as nx
 import numpy as np
 import sys
-import cycle_analysis.cycle_tools as cycle_tools
 
 
-class simple(cycle_tools.toolbox, object):
+class simple_cycles( object):
+
+    """
+    A class to generate cycle bases and create a minimal basis in
+    networkx formats
+
+    Attributes
+    ----------
+    G : nx.Graph()
+        A simple graph which on which the cycle basis is calcuclated
+    """
 
     def __init__(self):
-        super(simple, self).__init__()
+
+        self.G = None
 
     def generate_cycle_lists(self):
+
+        """
+        Returns an edge list, and labeled dictionary of cycles drawn from
+        a Horton cycle search for all vertices.
+
+        Returns:
+            dictionary: A dictionary which of cycles generated from bfs searches
+            list: a list of cycles represented by their edge sets
+
+        Raises
+        -------
+        NotImplementedError
+            If no graph is initially set for the backbone Graph G.
+        """
+
+        if self.G is None:
+            raise RuntimeError("cycle_tools_simple.simple_cycles.G is not set!")
 
         nx.set_node_attributes(self.G, False, 'push')
 
@@ -46,6 +73,21 @@ class simple(cycle_tools.toolbox, object):
         return cyc_dict, cyc_list
 
     def find_cycle(self, dict_path, e, n):
+        """
+        Returns an edge list, and node list for a cycle constructed from
+        spanning tree + additional edge.
+
+        Args:
+            dict_path (dictionary): A dictionary of shortest paths in the bfs tree
+            e (tuple): The edge which is to be plugge into the bfs tree and generates a cycle
+            n (int): The root of the current bfs tree
+        Returns:
+            list: A list of vertices for the new cycle
+            list: A list of edges for the new cycle
+
+        Raises:
+            Exception: description
+        """
 
         # label pathways
         l1 = dict_path[e[1]][::-1]
@@ -70,6 +112,20 @@ class simple(cycle_tools.toolbox, object):
         return new_path, new_edges
 
     def compute_cycles_superlist(self, root):
+        """
+        Returns an edge list of cycles drawn from a Horton cycle search for
+        one vertex.
+
+        Args:
+            root (int): The root vertex of the current bfs tree
+
+        Returns:
+            list: The superlist of cycles from all bfs trees, in edge list representation
+
+        Raises:
+            Exception: description
+
+        """
 
         spanning_tree, dict_path = self.breadth_first_tree(root)
         diff_graph = nx.difference(self.G, spanning_tree)
@@ -82,6 +138,20 @@ class simple(cycle_tools.toolbox, object):
         return list_cycles
 
     def construct_networkx_basis(self, input_graph):
+        """
+        Return a cycle basis for the input graph, with all elements
+        edge lists.
+
+        Args:
+            input_graph (nx.Graph): A networkx graph with 'many' cycles
+
+        Returns:
+            list: The minimal basis of the graph, represented by a list of networkx graphs.
+
+        Raises:
+            Exception: description
+
+        """
 
         C = self.construct_minimum_basis(input_graph)
 
@@ -104,6 +174,21 @@ class simple(cycle_tools.toolbox, object):
         return networkx_basis
 
     def construct_minimum_basis(self, input_graph):
+
+        """
+        Return a cycle basis for the input graph, with all elements
+        edge lists.
+
+        Args:
+            input_graph (nx.Graph): A networkx graph
+
+        Returns:
+            list: The minimal basis of the graph, represented by a list of edge lists.
+
+        Raises:
+            Exception: description
+
+        """
 
         # calc minimum weight basis and construct dictionary for weights of
         # edges, takes a leave-less, connected, N > 1 SimpleGraph as input,
@@ -146,7 +231,7 @@ class simple(cycle_tools.toolbox, object):
 
             # if cycle edges are already included we check for linear dependece
             else:
-                E = self.edge_matrix(EC, len(min_basis), min_label, new_cycle)
+                E = self.edge_matrix(EC, min_label, new_cycle)
 
                 linear_independent = self.compute_linear_independence(E)
 
@@ -163,9 +248,26 @@ class simple(cycle_tools.toolbox, object):
 
         return min_basis
 
-    def edge_matrix(self, EC, length_basis, minimum_label, new_cycle):
+    def edge_matrix(self, nx_edges, minimum_label, new_cycle):
+        """
+        Return a binary matrix for operations on Z2, representing current
+        cycle candidates and a test cycle.
 
-        rows = len(EC.edges())
+        Args:
+            nx_edges (nx.Graph):A networkx graph backbone being rebuilt with cycle base edges
+            minimum_label (list): The labels sorting the edges in the binary cycle matrix.
+            new_cycle (list): A list of edges of the cycle to be tested.
+
+        Returns:
+            ndarray: Numpy array representing a binary cycle matrix in Z2.
+
+        Raises:
+            Exception: description
+
+        """
+
+        rows = len(nx_edges.edges())
+        length_basis = len(minimum_label)
         columns = length_basis+1
         E = np.zeros((rows, columns))
 
@@ -173,38 +275,67 @@ class simple(cycle_tools.toolbox, object):
             E[minimum_label[i], i] = 1
 
         for m in new_cycle:
-            E[EC.edges[m]['label'], -1] = 1
+            E[nx_edges.edges[m]['label'], -1] = 1
 
         return E
 
-    def compute_linear_independence(self, E):
+    def compute_linear_independence(self, edge_mat):
+        """
+        Return bool whether all columns of E are linear independent in Z2.
+
+        Args:
+            edge_mat (ndarray): An ndarray representing a binary cycle matrix in Z2.
+
+        Returns:
+            bool: Result indicating whether the columns are linear independent.
+
+        Raises:
+            Exception: description
+
+        """
 
         linear_independent = False
-        columns = len(E[0, :])
+        columns = len(edge_mat[0, :])
 
         # calc echelon form
         a_columns = np.arange(columns-1)
         for col in a_columns:
-            idx_nz = np.nonzero(E[col:, col])[0]
+            idx_nz = np.nonzero(edge_mat[col:, col])[0]
             idx = idx_nz[0]+col
 
             if len(idx_nz) == 1:
-                E[[col, idx_nz[0]+col], :] = E[[idx_nz[0]+col, col], :]
+                edge_mat[[col, idx_nz[0]+col], :] = edge_mat[[idx_nz[0]+col, col], :]
 
             else:
 
                 new_idx = idx_nz[1:]+col
-                aux_E = np.add(E[new_idx], E[idx])
-                E[new_idx] = np.mod(aux_E, 2)
-                E[[col, idx_nz[0]+col], :] = E[[idx_nz[0]+col, col], :]
+                aux_E = np.add(edge_mat[new_idx], edge_mat[idx])
+                edge_mat[new_idx] = np.mod(aux_E, 2)
+                edge_mat[[col, idx_nz[0]+col], :] = edge_mat[[idx_nz[0]+col, col], :]
 
-        r = np.nonzero(E[columns-1:, -1])[0]
+        r = np.nonzero(edge_mat[columns-1:, -1])[0]
         if r.size:
             linear_independent = True
 
         return linear_independent
 
     def breadth_first_tree(self, root):
+
+        """
+        Return a bfs-tree from root, as well a dictionary of shortest paths
+        between branching points and leaves.
+
+        Args:
+            root (int): The root vertex for bfs search.
+
+        Returns:
+            nx.Graph: The spanning tree from bfs search
+            dictionary:  A dicitonary of shortest paths between branching points and leaves.
+
+        Raises:
+            Exception: description
+
+        """
 
         T = nx.Graph()
         push_down = nx.get_node_attributes(self.G, 'push')
@@ -237,6 +368,11 @@ class simple(cycle_tools.toolbox, object):
         return T, dict_path
 
     def compute_sprouts(self, root, T, labels, push_down, dict_path, queue):
+
+
+        """
+        Update bfs push list and tree structure.
+        """
 
         for e in labels:
 

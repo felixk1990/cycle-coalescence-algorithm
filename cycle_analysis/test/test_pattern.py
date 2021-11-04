@@ -3,7 +3,7 @@
 # @Email:  kramer@mpi-cbg.de
 # @Project:  cycle_analysis
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-02T10:40:30+01:00
+# @Last modified time: 2021-11-04T22:08:56+01:00
 # @License: MIT
 import networkx as nx
 import numpy as np
@@ -18,7 +18,7 @@ def test_nested_square():
     G = ccp.generate_pattern(G, 'nested_square')
 
     T = ctc.coalescence()
-    dict_asymmetry = T.calc_tree_asymmetry()
+    dict_asymmetry = T.calc_cycle_asymmetry(G)
 
     y = np.fromiter(dict_asymmetry.values(), dtype=float)
 
@@ -32,7 +32,7 @@ def test_gradient():
     G = ccp.generate_pattern(G, 'gradient')
 
     T = ctc.coalescence()
-    dict_asymmetry = T.calc_tree_asymmetry()
+    dict_asymmetry = T.calc_cycle_asymmetry(G)
 
     y = np.fromiter(dict_asymmetry.values(), dtype=float)
 
