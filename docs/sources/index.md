@@ -7,7 +7,7 @@ This python module allows users to analyze weighted, undirected simple graphs fo
   -  All fundamentals minimal cyles (minimal number of edges) are listed in the weighted graph G and mapped onto the leaves of a new tree T.
   -  Then one identifies the lightest edge e in G and merges the two smallest cycles along this edge, creating a new vertex in the tree T for the merger cycle
   -  remove the original two cycles and proceed with the next lightest edge e until all cycles in G are merged
-  -  finally calculate the tree asymmetry using the techniques of "Van-Pelt et al, 'Tree Asymmetry—A Sensitive and Practical Measure for Binary Topological Trees' ,1992"
+  -  finally calculate the tree asymmetry using the techniques of "Van-Pelt et al, 'Tree Asymmetryâ€”A Sensitive and Practical Measure for Binary Topological Trees' ,1992"
   -  the asymmetry orderparameter will be be 1 for perfecly asymmetric trees and 0 for perfectly symmetric trees
   ![modes](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/modes_merging_algorithm_2016.png)
   Figure taken from: Modes et al,'Extracting Hidden Hierarchies in 3D Distribution Networks', 2016

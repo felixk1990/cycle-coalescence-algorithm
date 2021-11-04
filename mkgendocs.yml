@@ -3,7 +3,7 @@
 # @Email:  kramer@mpi-cbg.de
 # @Project: go-with-the-flow
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-02T11:46:13+01:00
+# @Last modified time: 2021-11-04T12:14:37+01:00
 # @License: MIT
 
 
@@ -13,13 +13,17 @@ repo: https://github.com/felixk1990/cycle-coalescence-algorithm  #link to source
 version: master                               #link to sources on github
 
 pages:
-  - page: "documentation/references/tools.md"
+  - page: "documentation/classes/cycle_tools.md"
     source: "cycle_analysis/cycle_tools.py"
     classes:
       - toolbox
 
+  - page: "documentation/classes/simple_cycles.md"
+    source: "cycle_analysis/cycle_tools_simple.py"
+    classes:
+      - simple
 
-  - page: "documentation/algorithm/algorithm.md"
+  - page: "documentation/classes/coalescence.md"
     source: "cycle_analysis/cycle_tools_coalescence.py"
     classes:
       - coalescence
