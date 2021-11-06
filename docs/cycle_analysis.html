@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cycle_analysis package &mdash; cycle_analysis  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="About cycle_analysis" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cycle_analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About cycle_analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">cycle_analysis package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-cycle_analysis.cycle_tools_coalescence">cycle_analysis.cycle_tools_coalescence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-cycle_analysis.cycle_tools_simple">cycle_analysis.cycle_tools_simple module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cycle_analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>cycle_analysis package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cycle_analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="cycle-analysis-package">
+<h1>cycle_analysis package<a class="headerlink" href="#cycle-analysis-package" title="Permalink to this headline"></a></h1>
+<div class="section" id="module-cycle_analysis.cycle_tools_coalescence">
+<span id="cycle-analysis-cycle-tools-coalescence-module"></span><h2>cycle_analysis.cycle_tools_coalescence module<a class="headerlink" href="#module-cycle_analysis.cycle_tools_coalescence" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_coalescence.coalescence">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cycle_analysis.cycle_tools_coalescence.</span></span><span class="sig-name descname"><span class="pre">coalescence</span></span><a class="headerlink" href="#cycle_analysis.cycle_tools_coalescence.coalescence" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cycle_analysis.cycle_tools_simple.simple_cycles" title="cycle_analysis.cycle_tools_simple.simple_cycles"><code class="xref py py-class docutils literal notranslate"><span class="pre">cycle_analysis.cycle_tools_simple.simple_cycles</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_coalescence.coalescence.build_cycle_tree">
+<span class="sig-name descname"><span class="pre">build_cycle_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cycle_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cycle_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merged_cycle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_coalescence.coalescence.build_cycle_tree" title="Permalink to this definition"></a></dt>
+<dd><p>Systematically build a merger tree and save the respective asymetry
+values and spatial layout</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cycle_1</strong> (<em>nx.Graph</em>) – A networkx graph, cycle</p></li>
+<li><p><strong>cycle_2</strong> (<em>nx.Graph</em>) – A networkx graph, cycle</p></li>
+<li><p><strong>merged_cycle</strong> (<em>nx.Graph</em>) – A networkx graph, cycle</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – TO BE IMPLEMENTED</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_coalescence.coalescence.calc_cycle_asymmetry">
+<span class="sig-name descname"><span class="pre">calc_cycle_asymmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_coalescence.coalescence.calc_cycle_asymmetry" title="Permalink to this definition"></a></dt>
+<dd><p>Given a Graph with a cyclic backbone, calculate the minimal
+(topological) cycle basis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_graph</strong> (<em>nx.Graph</em>) – A networkx graph with ‘many’ cycles</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary vertices with respective asymmetries</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – TO BE IMPLEMENTED</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_coalescence.coalescence.calc_cycle_coalescence">
+<span class="sig-name descname"><span class="pre">calc_cycle_coalescence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cycle_basis</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_coalescence.coalescence.calc_cycle_coalescence" title="Permalink to this definition"></a></dt>
+<dd><p>Builds the merging tree according to the cycle coalescence algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_graph</strong> (<em>nx.Graph</em>) – A networkx graph with ‘many’ cycles</p></li>
+<li><p><strong>cycle_basis</strong> (<em>list</em>) – List of networkx cycles</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Weighted Merging Tree</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>nx.Graph</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – TO BE IMPLEMENTED</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_coalescence.coalescence.calc_tree_asymmetry">
+<span class="sig-name descname"><span class="pre">calc_tree_asymmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cycle_tree</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_coalescence.coalescence.calc_tree_asymmetry" title="Permalink to this definition"></a></dt>
+<dd><p>Computes  binary networkx tree and calculates its asymmetry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cycle_tree</strong> (<em>nx.Graph</em>) – A networkx graph with weighted vertices</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary which holds the asymetry value for any
+vertex in the graph</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – TO BE IMPLEMENTED</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_coalescence.coalescence.merge_cycles">
+<span class="sig-name descname"><span class="pre">merge_cycles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cycle_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cycle_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_coalescence.coalescence.merge_cycles" title="Permalink to this definition"></a></dt>
+<dd><p>Merge two graph cycles according to common cycle arithmetics in Z2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cycle_1</strong> (<em>nx.Graph</em>) – A networkx graph, cycle</p></li>
+<li><p><strong>cycle_2</strong> (<em>nx.Graph</em>) – A networkx graph, cycle</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A networkx graph, cycle</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>merged_cycle (nx.Graph)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – TO BE IMPLEMENTED</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-cycle_analysis.cycle_tools_simple">
+<span id="cycle-analysis-cycle-tools-simple-module"></span><h2>cycle_analysis.cycle_tools_simple module<a class="headerlink" href="#module-cycle_analysis.cycle_tools_simple" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cycle_analysis.cycle_tools_simple.</span></span><span class="sig-name descname"><span class="pre">simple_cycles</span></span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to generate cycle bases and create a minimal basis in
+networkx formats</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.G">
+<span class="sig-name descname"><span class="pre">G</span></span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.G" title="Permalink to this definition"></a></dt>
+<dd><p>A simple graph which on which the cycle basis is calcuclated</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>nx.Graph()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.breadth_first_tree">
+<span class="sig-name descname"><span class="pre">breadth_first_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.breadth_first_tree" title="Permalink to this definition"></a></dt>
+<dd><p>Return a bfs-tree from root, as well a dictionary of shortest paths
+between branching points and leaves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root</strong> (<em>int</em>) – The root vertex for bfs search.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The spanning tree from bfs search
+dictionary:  A dicitonary of shortest paths between branching points and leaves.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>nx.Graph</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.compute_cycles_superlist">
+<span class="sig-name descname"><span class="pre">compute_cycles_superlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.compute_cycles_superlist" title="Permalink to this definition"></a></dt>
+<dd><p>Returns an edge list of cycles drawn from a Horton cycle search for
+one vertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root</strong> (<em>int</em>) – The root vertex of the current bfs tree</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The superlist of cycles from all bfs trees, in edge list representation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.compute_linear_independence">
+<span class="sig-name descname"><span class="pre">compute_linear_independence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.compute_linear_independence" title="Permalink to this definition"></a></dt>
+<dd><p>Return bool whether all columns of E are linear independent in Z2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_mat</strong> (<em>ndarray</em>) – An ndarray representing a binary cycle matrix in Z2.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Result indicating whether the columns are linear independent.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.compute_sprouts">
+<span class="sig-name descname"><span class="pre">compute_sprouts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">push_down</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.compute_sprouts" title="Permalink to this definition"></a></dt>
+<dd><p>Update bfs push list and tree structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.construct_minimum_basis">
+<span class="sig-name descname"><span class="pre">construct_minimum_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.construct_minimum_basis" title="Permalink to this definition"></a></dt>
+<dd><p>Return a cycle basis for the input graph, with all elements
+edge lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_graph</strong> (<em>nx.Graph</em>) – A networkx graph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The minimal basis of the graph, represented by a list of edge lists.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.construct_networkx_basis">
+<span class="sig-name descname"><span class="pre">construct_networkx_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.construct_networkx_basis" title="Permalink to this definition"></a></dt>
+<dd><p>Return a cycle basis for the input graph, with all elements
+edge lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_graph</strong> (<em>nx.Graph</em>) – A networkx graph with ‘many’ cycles</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The minimal basis of the graph, represented by a list of networkx graphs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.edge_matrix">
+<span class="sig-name descname"><span class="pre">edge_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nx_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_cycle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.edge_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Return a binary matrix for operations on Z2, representing current
+cycle candidates and a test cycle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nx_edges</strong> (<em>nx.Graph</em>) – A networkx graph backbone being rebuilt with cycle base edges</p></li>
+<li><p><strong>minimum_label</strong> (<em>list</em>) – The labels sorting the edges in the binary cycle matrix.</p></li>
+<li><p><strong>new_cycle</strong> (<em>list</em>) – A list of edges of the cycle to be tested.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Numpy array representing a binary cycle matrix in Z2.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.find_cycle">
+<span class="sig-name descname"><span class="pre">find_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.find_cycle" title="Permalink to this definition"></a></dt>
+<dd><p>Returns an edge list, and node list for a cycle constructed from
+spanning tree + additional edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dict_path</strong> (<em>dictionary</em>) – A dictionary of shortest paths in the bfs tree</p></li>
+<li><p><strong>e</strong> (<em>tuple</em>) – The edge which is to be plugge into the bfs tree and generates a cycle</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The root of the current bfs tree</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of vertices for the new cycle
+list: A list of edges for the new cycle</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cycle_analysis.cycle_tools_simple.simple_cycles.generate_cycle_lists">
+<span class="sig-name descname"><span class="pre">generate_cycle_lists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cycle_analysis.cycle_tools_simple.simple_cycles.generate_cycle_lists" title="Permalink to this definition"></a></dt>
+<dd><p>Returns an edge list, and labeled dictionary of cycles drawn from
+a Horton cycle search for all vertices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary which of cycles generated from bfs searches
+list: a list of cycles represented by their edge sets</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dictionary</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If no graph is initially set for the backbone Graph G.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="About cycle_analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Felix Kramer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

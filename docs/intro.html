@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About cycle_analysis &mdash; cycle_analysis  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cycle_analysis package" href="cycle_analysis.html" />
+    <link rel="prev" title="Welcome to cycle_analysis’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cycle_analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About cycle_analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gallery">Gallery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgement">Acknowledgement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cycle_analysis.html">cycle_analysis package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cycle_analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>About cycle_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/intro.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="about-cycle-analysis">
+<h1>About cycle_analysis<a class="headerlink" href="#about-cycle-analysis" title="Permalink to this headline"></a></h1>
+<p>Have you ever wondered how cycles in graphs form a vector space and encapsulate nesting information? Here is a tool ready to use, enabling you to calculate the cycle bases, mapping them onto a merging tree, and analyze this tree’s asymmetry.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>This python module allows users to analyze weighted, undirected simple graphs for their nested cycle structure by performing two major functions: Calculating minimal cycle bases (Horton algorithm) and computing the merging tree (cycle coalescence algorithm). The algorithm is described in “Modes et al,’Extracting Hidden Hierarchies in 3D Distribution Networks’, 2016” and basically follows the shown scheme below:</p>
+<ul class="simple">
+<li><p>All fundamentals minimal cyles (minimal number of edges) are listed in the weighted graph G and mapped onto the leaves of a new tree T.</p></li>
+<li><p>Then one identifies the lightest edge e in G and merges the two smallest cycles along this edge, creating a new vertex in the tree T for the merger cycle</p></li>
+<li><p>remove the original two cycles and proceed with the next lightest edge e until all cycles in G are merged</p></li>
+<li><p>finally calculate the tree asymmetry using the techniques of “Van-Pelt et al, ‘Tree Asymmetry—A Sensitive and Practical Measure for Binary Topological Trees’ ,1992”</p></li>
+<li><p>the asymmetry orderparameter will be be 1 for perfecly asymmetric trees and 0 for perfectly symmetric trees
+<img alt="modes" src="https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/modes_merging_algorithm_2016.png" />
+Figure taken from: Modes et al,’Extracting Hidden Hierarchies in 3D Distribution Networks’, 2016</p></li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>pip install cycle_analysis</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<p>Currently this implementation only supports networkx graphs.
+Call cycle_analysis.cycle_coalescence for graph analysis, while cycle_analysis.test provides you with pre-customized functions to put specific weight patterns onto the graph: random/gradient/nested_square</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">cycle_analysis.cycle_coalescence</span> <span class="k">as</span> <span class="nn">cc</span>
+<span class="kn">import</span> <span class="nn">cycle_analysis.cycle_custom_pattern</span> <span class="k">as</span> <span class="nn">ccp</span>
+
+<span class="n">G</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">grid_graph</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">G</span><span class="o">=</span><span class="n">ccp</span><span class="o">.</span><span class="n">generate_pattern</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="s1">&#39;nested_square&#39;</span><span class="p">)</span>
+
+<span class="n">asymmetry</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">calc_cycle_asymmetry</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">asymmetry</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>./notebook contains examples to play with in the form of jupyter notebooks</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">python3.6+</span></code>,<code class="docutils literal notranslate"><span class="pre">networkx</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code></p>
+</div>
+<div class="section" id="gallery">
+<h2>Gallery<a class="headerlink" href="#gallery" title="Permalink to this headline"></a></h2>
+<p>random weight distribution<br /><img alt="random" src="https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/random.png" /></p>
+<p>nested square weight distribution<br /><img alt="nested" src="https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/nested_square.png" /></p>
+<p>gradient weight distribution<br /><img alt="gradient" src="https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/gradient.png" /></p>
+</div>
+<div class="section" id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cycle_analysis</span></code> written by Felix Kramer</p>
+<p>This implementation is based on the cycle coalescence algorithm as described by <a class="reference external" href="https://journals.aps.org/prx/pdf/10.1103/PhysRevX.6.031009">Modes et al, 2016</a>. Please acknowledge if used for any further publication or projects.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to cycle_analysis’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cycle_analysis.html" class="btn btn-neutral float-right" title="cycle_analysis package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Felix Kramer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
