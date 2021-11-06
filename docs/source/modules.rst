@@ -5,4 +5,3 @@ cycle-coalescence-algorithm
    :maxdepth: 4
 
    cycle_analysis
-   setup
