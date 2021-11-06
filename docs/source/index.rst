@@ -9,6 +9,8 @@ Welcome to cycle_analysis's documentation!
 .. toctree::
    :maxdepth: 2
 
+   intro
+   cycle_analysis
 
 Indices and tables
 ==================

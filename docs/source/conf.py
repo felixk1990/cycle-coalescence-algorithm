@@ -3,7 +3,7 @@
 # @Email:  kramer@mpi-cbg.de
 # @Project: go-with-the-flow
 # @Last modified by:    Felix Kramer
-# @Last modified time: 2021-11-04T21:05:28+01:00
+# @Last modified time: 2021-11-06T11:56:41+01:00
 # @License: MIT
 
 
@@ -22,7 +22,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('C:/Users/felix/Documents/GitHub/cycle-coalescence-algorithm/cycle_analysis'))
+sys.path.insert(0, os.path.abspath('../../cycle_analysis'))
 
 
 # -- Project information -----------------------------------------------------
@@ -41,6 +41,7 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
     'sphinx.ext.napoleon',
+    'recommonmark'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -50,7 +51,7 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
+source_suffix = [".rst", ".md"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -63,3 +64,31 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+# import the readme.md
+import pathlib
+
+# The readme that already exists
+readme_path = pathlib.Path('../..').parent.resolve().parent / "README.md"
+# We copy a modified version here
+readme_target = pathlib.Path('../').parent / "intro.md"
+
+with readme_target.open("w") as outf:
+    # Change the title to "Readme"
+    outf.write(
+        "\n".join(
+            [
+                "About cycle_analysis",
+                "======",
+            ]
+        )
+    )
+    lines = []
+    for line in readme_path.read_text().split("\n"):
+        if line.startswith("# "):
+            # Skip title, because we now use "Readme"
+            # Could also simply exclude first line for the same effect
+            continue
+        lines.append(line)
+    outf.write("\n".join(lines))
