@@ -29,8 +29,6 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
         Returns:
             dictionary: A dictionary vertices with respective asymmetries
 
-        Raises:
-            Exception: TO BE IMPLEMENTED
         """
 
         minimum_basis = self.construct_networkx_basis(input_graph)
@@ -53,9 +51,6 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
 
         Returns:
             nx.Graph: Weighted Merging Tree
-
-        Raises:
-            Exception: TO BE IMPLEMENTED
 
         """
 
@@ -127,11 +122,7 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
             cycle_tree (nx.Graph): A networkx graph with weighted vertices
 
         Returns:
-            dictionary: A dictionary which holds the asymetry value for any
-            vertex in the graph
-
-        Raises:
-            Exception: TO BE IMPLEMENTED
+            dictionary: A dictionary which holds the asymetry value for any vertex in the graph
 
         """
 
@@ -154,9 +145,6 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
             cycle_1 (nx.Graph): A networkx graph, cycle
             cycle_2 (nx.Graph): A networkx graph, cycle
             merged_cycle (nx.Graph): A networkx graph, cycle
-
-        Raises:
-            Exception: TO BE IMPLEMENTED
 
         """
 
@@ -201,17 +189,15 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
     def merge_cycles(self, cycle_1, cycle_2):
 
         """
-        Merge two graph cycles according to common cycle arithmetics in Z2.
+        Merge two graph cycles according to common cycle arithmetics in Z2 and return the merged cycle.
 
         Args:
             cycle_1 (nx.Graph): A networkx graph, cycle
             cycle_2 (nx.Graph): A networkx graph, cycle
 
         Returns:
-            merged_cycle (nx.Graph): A networkx graph, cycle
+            nx.Graph: A networkx graph, cycle
 
-        Raises:
-            Exception: TO BE IMPLEMENTED
 
         """
 
@@ -224,9 +210,6 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
                     merged_cycle.remove_edge(*e)
                 else:
                     merged_cycle.add_edge(*e)
-
-        # for e in merged_cycle.edges():
-        #     merged_cycle.graph['cycle_weight'] += self.G.edges[e]['weight']
 
         list_merged = list(merged_cycle.nodes())
         for n in list_merged:

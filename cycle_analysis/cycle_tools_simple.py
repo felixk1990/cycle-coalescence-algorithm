@@ -6,10 +6,8 @@
 # @Last modified time: 2021-11-04T22:31:34+01:00
 import networkx as nx
 import numpy as np
-import sys
 
-
-class simple_cycles( object):
+class simple_cycles(object):
 
     """
     A class to generate cycle bases and create a minimal basis in
@@ -244,7 +242,7 @@ class simple_cycles( object):
                 break
 
         if len(min_basis) < nullity:
-            sys.exit('Error: Cycle basis badly constructed')
+            raise RuntimeError('Construction error, not enough cycles found!')
 
         return min_basis
 
@@ -280,6 +278,7 @@ class simple_cycles( object):
         return E
 
     def compute_linear_independence(self, edge_mat):
+        
         """
         Return bool whether all columns of E are linear independent in Z2.
 
@@ -331,9 +330,6 @@ class simple_cycles( object):
         Returns:
             nx.Graph: The spanning tree from bfs search
             dictionary:  A dicitonary of shortest paths between branching points and leaves.
-
-        Raises:
-            Exception: description
 
         """
 
