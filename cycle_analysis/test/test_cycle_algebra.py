@@ -7,12 +7,13 @@
 # @License: MIT
 
 import networkx as nx
-from cycle_analysis import cycle_tools_coalescence as ctc
+from cycle_analysis.cycle_tools_coalescence import  *
+from cycle_analysis.cycle_tools_simple import  *
 
 
 def test_merging():
 
-    T = ctc.coalescence()
+    T = Coalescence()
     n1 = 5
     n2 = 5
 

@@ -7,17 +7,18 @@
 # @License: MIT
 import networkx as nx
 import numpy as np
-from cycle_analysis import cycle_tools_coalescence as ctc
-import cycle_analysis.cycle_custom_pattern as ccp
+from cycle_analysis.cycle_tools_coalescence import  *
+from cycle_analysis.cycle_tools_simple import  *
+from cycle_analysis.cycle_custom_pattern import  *
 
 
 def test_nested_square():
 
     n = 7
     G = nx.grid_graph((n, n, 1))
-    G = ccp.generate_pattern(G, 'nested_square')
+    G = generate_pattern(G, 'nested_square')
 
-    T = ctc.coalescence()
+    T = Coalescence()
     dict_asymmetry = T.calc_cycle_asymmetry(G)
 
     y = np.fromiter(dict_asymmetry.values(), dtype=float)
@@ -29,9 +30,9 @@ def test_gradient():
 
     n = 7
     G = nx.grid_graph((n, n, 1))
-    G = ccp.generate_pattern(G, 'gradient')
+    G = generate_pattern(G, 'gradient')
 
-    T = ctc.coalescence()
+    T = Coalescence()
     dict_asymmetry = T.calc_cycle_asymmetry(G)
 
     y = np.fromiter(dict_asymmetry.values(), dtype=float)
