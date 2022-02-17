@@ -8,7 +8,7 @@
 import networkx as nx
 import numpy as np
 import random as rd
-import cycle_analysis.cycle_tools_simple as cc
+from .cycle_tools_simple import *
 # generate example pattern random/nested/gradient for testing baseline values
 # of the order parameter
 
@@ -84,8 +84,8 @@ def generate_pattern_nestedSquare(nx_graph):
             new_nx_graph = nx.compose(new_nx_graph, tile)
 
         nx_graph = nx.Graph(new_nx_graph)
-        T = cc.simple_cycles()
-        basis = T.construct_networkx_basis(new_nx_graph)
+
+        basis = construct_networkx_basis(new_nx_graph)
         simple_basis = [nx.Graph(b) for b in basis]
         for b in simple_basis:
             for n in b.nodes():

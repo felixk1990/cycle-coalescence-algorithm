@@ -6,16 +6,23 @@
 # @Last modified time: 2021-11-04T22:12:19+01:00
 # @License: MIT
 import networkx as nx
-import numpy as np
-import cycle_analysis.cycle_tools_simple as cycle_tools_simple
+from dataclasses import dataclass, field
+from .cycle_tools_simple import *
 
+@dataclass
+class Coalescence():
 
-class coalescence(cycle_tools_simple.simple_cycles, object):
+    """
+    This is a class of caolescence algorithms, for the analysis of mesh-like
+    spatial networks.
 
-    def __init__(self):
-        super(coalescence, self).__init__()
-        self.cycle_tree = nx.Graph()
-        self.counter_c = 0
+    Returns:
+        Coalescence: A custom Coalescence instance object.
+
+    """
+
+    counter_c: int = field(default=0, repr=False)
+    cycle_tree: nx.Graph = field(default_factory=nx.Graph, repr=False)
 
     def calc_cycle_asymmetry(self, input_graph):
 
@@ -31,7 +38,7 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
 
         """
 
-        minimum_basis = self.construct_networkx_basis(input_graph)
+        minimum_basis = construct_networkx_basis(input_graph)
         for mb in minimum_basis:
             mb.graph['cycle_weight'] = nx.number_of_edges(mb)
 
@@ -150,7 +157,7 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
 
         cyc_E_sets = [cycle_1.edges(), cycle_2.edges(), merged_cycle.edges()]
         cyc_key = [tuple(ces) for ces in cyc_E_sets]
-        c_weight = np.zeros(2)
+        c_weight = [0., 0.]
 
         # build merging tree
         for i in range(2):
@@ -166,7 +173,7 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
 
         posY1 = self.cycle_tree.nodes[cyc_key[0]]['pos'][1]
         posY2 = self.cycle_tree.nodes[cyc_key[1]]['pos'][1]
-        c_y = np.amax([posY1, posY2]) + 2.
+        c_y = max([posY1, posY2]) + 2.
 
         attributes = {
             'pos': (c_x, c_y),
@@ -182,7 +189,7 @@ class coalescence(cycle_tools_simple.simple_cycles, object):
         if c_y >= 6:
             self.cycle_tree.nodes[cyc_key[2]]['branch_type'] = 'vanpelt_2'
             A = (c_weight[0]-c_weight[1])/(c_weight[0]+c_weight[1]-2.)
-            self.cycle_tree.nodes[cyc_key[2]]['asymmetry'] = np.absolute(A)
+            self.cycle_tree.nodes[cyc_key[2]]['asymmetry'] = abs(A)
         else:
             self.cycle_tree.nodes[cyc_key[2]]['branch_type'] = 'none'
 
