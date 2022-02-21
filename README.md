@@ -14,7 +14,7 @@ This python module allows users to analyze weighted, undirected simple graphs fo
 
 
 ##  Installation
-pip install cycle_analysis
+pip install cycle-analysis
 
 ##  Usage
 Currently this implementation only supports networkx graphs.
@@ -35,9 +35,13 @@ asymmetry=cc.calc_cycle_asymmetry(weightedG)
 print(asymmetry)
 ```
 ./notebook contains examples to play with in the form of jupyter notebooks. You can readily deploy those using binder:
-https://hub.gke2.mybinder.org/user/felixk1990-cycl-cence-algorithm-3wjw1pvz/lab
+https://hub.gke2.mybinder.org/user/felixk1990-cycl-cence-algorithm-y1jke01t/lab/tree/notebook
 ##  Requirements
-``` python3.6+ ```,``` networkx ```, ``` numpy ```
+```python
+networkx==2.5
+numpy==1.19.1
+matplotlib==3.4.3
+```
 ##  Gallery
 random weight distribution\
 ![random](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/random.png)
@@ -48,6 +52,6 @@ nested square weight distribution\
 gradient weight distribution\
 ![gradient](https://raw.githubusercontent.com/felixk1990/cycle-coalescence-algorithm/main/gallery/gradient.png)
 ## Acknowledgement
-```cycle_analysis``` written by Felix Kramer
+```cycle-analysis``` written by Felix Kramer
 
 This implementation is based on the cycle coalescence algorithm as described by [Modes et al, 2016](https://journals.aps.org/prx/pdf/10.1103/PhysRevX.6.031009). Please acknowledge if used for any further publication or projects.
