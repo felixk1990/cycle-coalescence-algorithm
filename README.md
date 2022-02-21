@@ -21,16 +21,17 @@ Currently this implementation only supports networkx graphs.
 Call cycle_analysis.cycle_coalescence for graph analysis, while cycle_analysis.test provides you with pre-customized functions to put specific weight patterns onto the graph: random/gradient/nested_square
 ```python
 import networkx as nx
-import cycle_analysis.cycle_coalescence as cc
-import cycle_analysis.cycle_custom_pattern as ccp
+from cycle_analysis.cycle_tools_coalescence import Coalescence
+from cycle_analysis.cycle_custom_pattern import generate_pattern
+from cycle_analysis.cycle_tools_simple import construct_networkx_basis
 
 # generate a dummy graph for testing
-# put an edge weight distribution on the system, available are random/gradient/nested_square
-G=nx.grid_graph((7,7,1))
-G=ccp.generate_pattern(G,'nested_square')
+# put an edge weight distribution on the system, available are random/gradient/bigradient/nested_square
+unweightedG = nx.grid_graph((5, 5, 1))
+weightedG = generate_pattern(unweightedG, 'nested_square')
 
 # merge all shortest cycles and calc the merging tree's asymmetry for each branch
-asymmetry=cc.calc_cycle_asymmetry(G)
+asymmetry=cc.calc_cycle_asymmetry(weightedG)
 print(asymmetry)
 ```
 ./notebook contains examples to play with in the form of jupyter notebooks. You can readily deploy those using binder:
