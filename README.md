@@ -33,7 +33,8 @@ G=ccp.generate_pattern(G,'nested_square')
 asymmetry=cc.calc_cycle_asymmetry(G)
 print(asymmetry)
 ```
-./notebook contains examples to play with in the form of jupyter notebooks
+./notebook contains examples to play with in the form of jupyter notebooks. You can readily deploy those using binder:
+https://hub.gke2.mybinder.org/user/felixk1990-cycl-cence-algorithm-3wjw1pvz/lab
 ##  Requirements
 ``` python3.6+ ```,``` networkx ```, ``` numpy ```
 ##  Gallery
