@@ -35,7 +35,7 @@ asymmetry=cc.calc_cycle_asymmetry(weightedG)
 print(asymmetry)
 ```
 ./notebook contains examples to play with in the form of jupyter notebooks. You can readily deploy those using binder:
-https://hub.gke2.mybinder.org/user/felixk1990-cycl-cence-algorithm-y1jke01t/lab/tree/notebook
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/felixk1990/cycle-coalescence-algorithm/198727ddd80524cd7197f01e46cc74c33175b6f0?labpath=.%2Fnotebook)
 ##  Requirements
 ```python
 networkx==2.5
