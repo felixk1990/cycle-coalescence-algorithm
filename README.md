@@ -43,6 +43,20 @@ cycle_tree = T.calc_cycle_coalescence(weightedG, minimum_basis)
 
 pos=nx.get_node_attributes(cycle_tree, 'pos')
 nx.draw_networkx(cycle_tree, pos=pos, with_labels=False, node_size=50, ax=axs[1])
+
+
+
+
+# plot branching asymmetry in dependence of branching level
+dict_asymmetry = T.calc_tree_asymmetry(cycle_tree)
+x = [(cycle_tree.nodes[n]['pos'][1]-6)/2. for n in dict_asymmetry]
+y = [dict_asymmetry[n] for n in dict_asymmetry]
+
+plt.scatter(x,y)
+plt.ylabel('asymmetry')
+plt.xlabel('branching level')
+plt.grid(True)
+plt.show()
 ```
 ./notebook contains examples to play with in the form of jupyter notebooks. 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/felixk1990/cycle-coalescence-algorithm/198727ddd80524cd7197f01e46cc74c33175b6f0?labpath=.%2Fnotebook)
