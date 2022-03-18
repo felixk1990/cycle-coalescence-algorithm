@@ -21,6 +21,7 @@ Currently this implementation only supports networkx graphs.
 Call cycle_analysis.cycle_coalescence for graph analysis, while cycle_analysis.test provides you with pre-customized functions to put specific weight patterns onto the graph: random/gradient/nested_square
 ```python
 import networkx as nx
+import matplotlib.pyplot as plt
 from cycle_analysis.cycle_tools_coalescence import Coalescence
 from cycle_analysis.cycle_custom_pattern import generate_pattern
 from cycle_analysis.cycle_tools_simple import construct_networkx_basis
@@ -30,9 +31,32 @@ from cycle_analysis.cycle_tools_simple import construct_networkx_basis
 unweightedG = nx.grid_graph((5, 5, 1))
 weightedG = generate_pattern(unweightedG, 'nested_square')
 
-# merge all shortest cycles and calc the merging tree's asymmetry for each branch
-asymmetry=cc.calc_cycle_asymmetry(weightedG)
-print(asymmetry)
+fig,axs = plt.subplots(2, 1, figsize=(10,10))
+weights = [weightedG.edges[e]['weight'] for e in weightedG.edges()]
+pos = nx.get_node_attributes(weightedG, 'pos')
+nx.draw_networkx(weightedG, pos=pos, width=weights, with_labels=False, node_size=50, ax=axs[0] )
+
+# merge all shortest cycles and create merging tree
+T = Coalescence()
+minimum_basis = construct_networkx_basis(weightedG)
+cycle_tree = T.calc_cycle_coalescence(weightedG, minimum_basis)
+
+pos=nx.get_node_attributes(cycle_tree, 'pos')
+nx.draw_networkx(cycle_tree, pos=pos, with_labels=False, node_size=50, ax=axs[1])
+
+
+
+
+# plot branching asymmetry in dependence of branching level
+dict_asymmetry = T.calc_tree_asymmetry(cycle_tree)
+x = [(cycle_tree.nodes[n]['pos'][1]-6)/2. for n in dict_asymmetry]
+y = [dict_asymmetry[n] for n in dict_asymmetry]
+
+plt.scatter(x,y)
+plt.ylabel('asymmetry')
+plt.xlabel('branching level')
+plt.grid(True)
+plt.show()
 ```
 ./notebook contains examples to play with in the form of jupyter notebooks. 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/felixk1990/cycle-coalescence-algorithm/198727ddd80524cd7197f01e46cc74c33175b6f0?labpath=.%2Fnotebook)
